@@ -1,7 +1,7 @@
 @extends('layouts.backend.app')
 
 @section('header')
-<title>YBM - Blank</title>
+<title>YBM - Rekap Penyaluran</title>
 @endsection
 
 @push('css')
@@ -15,7 +15,7 @@
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('beranda') }}">Beranda</a></li>
-                <li class="breadcrumb-item active"><a href="#">Blank</a></li>
+                <li class="breadcrumb-item active"><a href="#">Rekap Penyaluran</a></li>
             </ol>
         </div>
     </div>
@@ -26,7 +26,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Blank</h4>
+                        <h4 class="card-title">Rekap Penyaluran</h4>
                     </div>
                 </div>
             </div>

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+    return redirect()->route('login');
     return view('welcome');
 });
 
@@ -24,6 +25,8 @@ Route::get('/blank', function () {
     return view('blank');
 });
 
+Route::get('salin-data', 'SalinDataController@salin');
+
 Route::get('beranda', 'BerandaController@index')->name('beranda');
 
 Route::group(['prefix' => 'pembukuan'], function () {
@@ -33,6 +36,12 @@ Route::group(['prefix' => 'pembukuan'], function () {
     Route::post('/{id}/update', 'PembukuanController@update')->name('pembukuan.kas.update');
     Route::post('/{id}/destroy', 'PembukuanController@destroy')->name('pembukuan.kas.destroy');
 }); 
+
+Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan'], function () {
+    Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
+    Route::get('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
+    Route::get('rekap-penyaluran', 'RekapPenyaluranController@index')->name('laporan.rekap-penyaluran');
+});
 
 Route::group(['prefix' => 'master' , 'namespace' => 'Master'], function () {
     Route::resource('pembukuan', 'PembukuanController');

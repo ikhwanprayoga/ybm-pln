@@ -7,6 +7,29 @@
 @push('css')
 <!-- datepicker -->
 <link href="{{ asset('plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+<style>
+.float-botton{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+    margin-top: 15px;
+    margin-left: 2px;
+}
+
+a:hover {
+    color: #d0d0d1;
+}
+</style>
 @endpush
 
 @section('content')
@@ -46,7 +69,7 @@
                                 <h4 class="card-title">Pembukuan {{ $kategoriPembukuan->nama_pembukuan }}</h4>
                             </div>
                             <div class="col-lg-6" style="text-align: right;">
-                                <button type="button" class="btn mb-1 btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Pembukuan</button>
+                                {{-- <button type="button" class="btn mb-1 btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Pembukuan</button> --}}
                             </div>
                         </div>
                         <div class="table-responsive"> 
@@ -67,7 +90,9 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        $saldo = 0
+                                        $saldo = 0;
+                                        $tDebet = 0;
+                                        $tKredit = 0;
                                     @endphp
                                     @foreach ($datas as $data)
                                     <tr>
@@ -80,7 +105,7 @@
                                         </td>
                                         <td>{{ date('d-m-Y', strtotime($data->tanggal)) }}</td>
                                         <td>{{ $data->uraian }}</td>
-                                        <td>
+                                        <td align=right>
                                             @php
                                                 if($data->tipe == 'debet') {
                                                     $debet = (int)$data->nominal;
@@ -90,7 +115,7 @@
                                             @endphp
                                             {{ ($data->tipe == 'debet') ? Helpers::toRupiah($data->nominal) : '' }}
                                         </td>
-                                        <td>
+                                        <td align=right>
                                             @php
                                             if($data->tipe == 'kredit') {
                                                 $kredit = (int)$data->nominal;
@@ -100,9 +125,11 @@
                                             @endphp
                                             {{ ($data->tipe == 'kredit') ? Helpers::toRupiah($data->nominal) : '' }}
                                         </td>
-                                        <td>
+                                        <td align=right>
                                             @php
                                                 $saldo = $saldo+$debet-$kredit;
+                                                $tDebet = $tDebet+$debet;
+                                                $tKredit = $tKredit+$kredit;
                                             @endphp
                                             {{ Helpers::toRupiah($saldo) }}
                                         </td>
@@ -111,6 +138,18 @@
                                         <td>{{ $data->penerima_manfaat }}</td>
                                     </tr>
                                     @endforeach
+                                    <tr>
+                                        <td colspan="8" align="right"><h5>Total Debet</h5></td>
+                                        <td colspan="2" align="right"><h5>Rp. {{ Helpers::toRupiah($tDebet) }}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" align="right"><h5>Total Kredit</h5></td>
+                                        <td colspan="2" align="right"><h5>Rp. {{ Helpers::toRupiah($tKredit) }}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" align="right"><h5>Sisa Saldo</h5></td>
+                                        <td colspan="2" align="right"><h5>Rp. {{ Helpers::toRupiah($saldo) }}</h5></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -152,8 +191,8 @@
                             <textarea class="form-control h-150px" rows="6" id="comment" name="uraian" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Nominal</label>
-                            <input id="nominalTambah" class="form-control" type="number" name="nominal" required>
+                            <label>Nominal (Rp.)</label>
+                            <input id="nominalTambah" class="form-control" type="text" name="nominal" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -220,8 +259,8 @@
                             <textarea class="form-control h-150px" rows="6" id="uraianUbah" name="uraian" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Nominal</label>
-                            <input id="nominalUbah" class="form-control" type="number" name="nominal" required>
+                            <label>Nominal (Rp.)</label>
+                            <input id="nominalUbah" class="form-control" type="text" name="nominal" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -283,6 +322,12 @@
 </div>
 @endsection
 
+@section('float-button')
+<a href="#" class="float-botton">
+    <i class="fa fa-plus my-float" style="font-size: 31px;"></i>
+</a>  
+@endsection
+
 @push('js')
 <!-- datepicker -->
 <script src="{{ asset('plugins/moment/moment.js') }}"></script>
@@ -295,8 +340,13 @@
         date: true
     });
 
+    $('.float-botton').click(function () { 
+        $('#modalTambah').modal('show')
+    })
+
     $('.tombolUbah').click(function () { 
         // console.log('edit')
+        // $('#nominalUbah').mask('000.000.000.000.000.000', {reverse: true})
         $('#modalUbah').modal('show')
 
         var url = '{{ url('pembukuan') }}'
@@ -304,10 +354,11 @@
 
         $.getJSON(url+'/'+id+'/edit', function (data) { 
             console.log(data)
+            // var nominal = data.nominal
             $('#tanggalUbah').val(data.tanggal)
             $('#tipeUbah').val(data.tipe).trigger('change')
             $('#uraianUbah').val(data.uraian)
-            $('#nominalUbah').val(data.nominal)
+            $('#nominalUbah').mask('000.000.000.000.000.000', {reverse: true}).val(data.nominal)
             $('#ashnafUbah').val(data.kategori_ashnaf_id).trigger('change')
             $('#programUbah').val(data.kategori_program_id).trigger('change')
             $('#penerimaManfaatUbah').val(data.penerima_manfaat)
@@ -330,6 +381,6 @@
         $('#formHapus').attr('action', url+'/'+id+'/destroy');
     })
 
-    // $('#nominalTambah').mask('000.000.000.000.000', {reverse: true})
+    $('#nominalTambah, #nominalUbah').mask('000.000.000.000.000.000', {reverse: true})
 </script>
 @endpush

@@ -21,7 +21,7 @@ class HelpersServiceProvider
     public static function toRupiah($nominal)
     {
         $nominal = (int)$nominal;
-        return number_format($nominal,2,',','.'); 
+        return number_format($nominal,0,',','.'); 
         // return $rupiah; 
     }
 }

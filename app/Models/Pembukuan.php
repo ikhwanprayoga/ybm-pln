@@ -12,6 +12,7 @@ class Pembukuan extends Model
         'kategori_pembukuan_id', 
         'kategori_ashnaf_id', 
         'kategori_program_id', 
+        'user_id', 
         'tanggal', 
         'tipe', 
         'uraian', 

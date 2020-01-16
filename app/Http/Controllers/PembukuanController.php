@@ -36,8 +36,9 @@ class PembukuanController extends Controller
             'penerima_manfaat'  => 'required',
         ]);
 
+        $userId = auth()->user()->id;
         $kategoriPembukuanId = KategoriPembukuan::where('slug', $slug)->first()->id;
-
+        
         $pembukuan = Pembukuan::create([
             'kategori_pembukuan_id' => $kategoriPembukuanId,
             'kategori_ashnaf_id' => $request->ashnaf,
@@ -45,8 +46,9 @@ class PembukuanController extends Controller
             'tanggal' => $request->tanggal,
             'tipe' => $request->tipe,
             'uraian' => $request->uraian,
-            'nominal' => $request->nominal,
+            'nominal' => preg_replace('/\D/', '', $request->nominal),
             'penerima_manfaat' => $request->penerima_manfaat,
+            'user_id' => $userId,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
@@ -71,14 +73,17 @@ class PembukuanController extends Controller
             'penerima_manfaat'  => 'required',
         ]);
 
+        $userId = auth()->user()->id;
+
         $pembukuan = Pembukuan::find($id)->update([
             'kategori_ashnaf_id' => $request->ashnaf,
             'kategori_program_id' => $request->program,
             'tanggal' => $request->tanggal,
             'tipe' => $request->tipe,
             'uraian' => $request->uraian,
-            'nominal' => $request->nominal,
+            'nominal' => preg_replace('/\D/', '', $request->nominal),
             'penerima_manfaat' => $request->penerima_manfaat,
+            'user_id' => $userId,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil diubah');

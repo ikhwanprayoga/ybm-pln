@@ -26,11 +26,11 @@
                     <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Laporan</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="./layout-blank.html">Blank</a></li>
-                    <li><a href="./layout-one-column.html">One Column</a></li>
-                    <li><a href="./layout-two-column.html">Two column</a></li>
-                    <li><a href="./layout-compact-nav.html">Compact Nav</a></li>
-                    <li><a href="./layout-vertical.html">Vertical</a></li>
+                    <li><a href="{{ route('laporan.arus-dana') }}">Arus Dana</a></li>
+                    <li><a href="{{ route('laporan.statistik-penyaluran') }}">Statistik Penyaluran</a></li>
+                    <li><a href="{{ route('laporan.rekap-penyaluran') }}">Rekap Penyaluran</a></li>
+                    <li><a href="#">Saldo Kas Bank</a></li>
+                    {{-- <li><a href="#">Vertical</a></li> --}}
                 </ul>
             </li>
             <li class="nav-label">Master</li>

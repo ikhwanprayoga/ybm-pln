@@ -39,8 +39,14 @@ Route::group(['prefix' => 'pembukuan'], function () {
 
 Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan'], function () {
     Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
+    //statistik penyaluran dana
     Route::get('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
+    Route::post('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
+    //rekap penyaluran
     Route::get('rekap-penyaluran', 'RekapPenyaluranController@index')->name('laporan.rekap-penyaluran');
+    //penerimaan data
+    Route::get('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
+    Route::post('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
 });
 
 Route::group(['prefix' => 'master' , 'namespace' => 'Master'], function () {

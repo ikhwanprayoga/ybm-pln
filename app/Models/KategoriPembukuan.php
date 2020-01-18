@@ -12,4 +12,9 @@ class KategoriPembukuan extends Model
         'nama_pembukuan', 'kode', 'slug', 'keterangan'
     ];
     public $timesstamps = true;
+
+    public function pembukuans()
+    {
+        return $this->hasMany('App\Models\Pembukuan');
+    }
 }

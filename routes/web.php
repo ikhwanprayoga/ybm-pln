@@ -27,9 +27,9 @@ Route::get('/blank', function () {
 
 Route::get('salin-data', 'SalinDataController@salin');
 
-Route::get('beranda', 'BerandaController@index')->name('beranda');
+Route::get('beranda', 'BerandaController@index')->middleware('auth')->name('beranda');
 
-Route::group(['prefix' => 'pembukuan'], function () {
+Route::group(['prefix' => 'pembukuan', 'middleware' => ['auth']], function () {
     Route::get('/{slug}', 'PembukuanController@index')->name('pembukuan');
     Route::post('/{slug}/store', 'PembukuanController@store')->name('pembukuan.kas.store');
     Route::get('/{id}/edit', 'PembukuanController@edit')->name('pembukuan.kas.edit');
@@ -37,7 +37,7 @@ Route::group(['prefix' => 'pembukuan'], function () {
     Route::post('/{id}/destroy', 'PembukuanController@destroy')->name('pembukuan.kas.destroy');
 }); 
 
-Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan'], function () {
+Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => ['auth']], function () {
     Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
     //statistik penyaluran dana
     Route::get('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan'], function () {
     Route::post('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
 });
 
-Route::group(['prefix' => 'master' , 'namespace' => 'Master'], function () {
+Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['auth']], function () {
     Route::resource('pembukuan', 'PembukuanController');
     Route::resource('ashnaf', 'AshnafController');
     Route::resource('program', 'ProgramController');

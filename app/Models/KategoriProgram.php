@@ -9,7 +9,7 @@ class KategoriProgram extends Model
     protected $table = 'kategori_programs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama_program'
+        'nama_program', 'warna'
     ];
     public $timesstamps = true;
 }

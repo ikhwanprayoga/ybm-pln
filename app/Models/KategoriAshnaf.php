@@ -9,7 +9,7 @@ class KategoriAshnaf extends Model
     protected $table = 'kategori_ashnafs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama_ashnaf'
+        'nama_ashnaf', 'warna'
     ];
     public $timesstamps = true;
 }

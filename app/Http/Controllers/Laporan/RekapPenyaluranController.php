@@ -22,7 +22,7 @@ class RekapPenyaluranController extends Controller
         }
         // $tahun = 2019;
         $bulans = $this->bulan();
-        $tahuns = Pembukuan::distinct()->orderBy('tanggal', 'desc')->get([DB::raw('YEAR(tanggal) as tahun')]);
+        $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
         $kategoriPembukuans = KategoriPembukuan::with('pembukuans')->get();
         $programs = KategoriProgram::whereIn('id', [2,3,4,5,6,7])->get();
         $ashnafs = KategoriAshnaf::whereIn('id', [2,3,4,5,6,7,8])->get();
@@ -112,7 +112,7 @@ class RekapPenyaluranController extends Controller
         }
         // $tahun = 2019;
         $bulans = $this->bulan();
-        $tahuns = Pembukuan::distinct()->orderBy('tanggal', 'desc')->get([DB::raw('YEAR(tanggal) as tahun')]);
+        $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
         $kategoriPembukuans = KategoriPembukuan::with('pembukuans')->get();
         $programs = KategoriProgram::whereIn('id', [2,3,4,5,6,7])->get();
         $ashnafs = KategoriAshnaf::whereIn('id', [2,3,4,5,6,7,8])->get();

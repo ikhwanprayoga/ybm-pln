@@ -16,6 +16,7 @@ class CreateKategoriAshnafsTable extends Migration
         Schema::create('kategori_ashnafs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_ashnaf');
+            $table->string('warna')->nullable();
             $table->timestamps();
         });
     }

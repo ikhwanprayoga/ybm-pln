@@ -41,10 +41,12 @@ class ProgramController extends Controller
     {
         $request->validate([
             'nama_program' => 'required',
+            'warna' => 'required',
         ]);
 
         $data = KategoriProgram::create([
-            'nama_program' => $request->nama_program
+            'nama_program' => $request->nama_program,
+            'warna' => $request->warna,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
@@ -83,7 +85,8 @@ class ProgramController extends Controller
     {
         $data = KategoriProgram::find($id);
         $data->update([
-            'nama_program' => $request->nama_program
+            'nama_program' => $request->nama_program,
+            'warna' => $request->warna,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil diubah');

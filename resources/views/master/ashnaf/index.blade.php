@@ -54,6 +54,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Ashnaf</th>
+                                        <th>Warna</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
@@ -62,8 +63,9 @@
                                     <tr>
                                         <th>{{ $loop->iteration }}</th>
                                         <td>{{ $item->nama_ashnaf }}</td>
+                                        <td>{{ $item->warna }}</td>
                                         <td>
-                                            <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->nama_ashnaf }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
+                                            <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->nama_ashnaf }}" data-warna="{{ $item->warna }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
                                             <button type="button" data-id="{{ $item->id }}" class="btn mb -1 btn-danger tombolHapus" >Hapus</button>
                                         </td>
                                     </tr>
@@ -94,6 +96,9 @@
                         <div class="form-group">
                           <input type="text" name="nama_ashnaf" id="" class="form-control input-rounded" placeholder="Masukkan Nama Ashnaf Baru" required>
                         </div>
+                        <div class="form-group">
+                          <input type="text" name="warna" id="" class="form-control input-rounded" placeholder="Kode Warna Hexadesimal" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -119,6 +124,9 @@
                     <div class="modal-body">
                         <div class="form-group">
                           <input type="text" name="nama_ashnaf" id="namaAshnaf" class="form-control input-rounded" placeholder="Masukkan Nama Ashnaf Baru" required>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" name="warna" id="warnaAshnaf" class="form-control input-rounded" placeholder="Kode Warna Hexadesimal" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,12 +171,14 @@
         // console.log('kelik' + id)
         var id = $(this).data('id')
         var nama = $(this).data('nama')
+        var warna = $(this).data('warna')
         var urlBase = '{{ url('master/ashnaf/') }}'
         var url = urlBase + '/' + id
 
         $('#modalUbah').modal('show')
         
         $('#namaAshnaf').val(nama)
+        $('#warnaAshnaf').val(warna)
         $('#formUbah').attr('action', url);
     })
 

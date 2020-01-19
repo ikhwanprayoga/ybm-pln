@@ -54,6 +54,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Program</th>
+                                        <th>Warna</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
@@ -62,8 +63,9 @@
                                     <tr>
                                         <th>{{ $loop->iteration }}</th>
                                         <td>{{ $item->nama_program }}</td>
+                                        <td>{{ $item->warna }}</td>
                                         <td>
-                                            <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->nama_program }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
+                                            <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->nama_program }}" data-warna="{{ $item->warna }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
                                             <button type="button" data-id="{{ $item->id }}" class="btn mb -1 btn-danger tombolHapus" >Hapus</button>
                                         </td>
                                     </tr>
@@ -92,7 +94,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                          <input type="text" name="nama_program" id="" class="form-control input-rounded" placeholder="Masukkan Nama Program Baru" required>
+                            <input type="text" name="nama_program" id="" class="form-control input-rounded" placeholder="Masukkan Nama Program Baru" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="warna" id="" class="form-control input-rounded" placeholder="Kode Warna Hexadesimal" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -118,7 +123,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                          <input type="text" name="nama_program" id="namaProgram" class="form-control input-rounded" placeholder="Masukkan Nama Program Baru" required>
+                            <input type="text" name="nama_program" id="namaProgram" class="form-control input-rounded" placeholder="Masukkan Nama Program Baru" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="warna" id="warnaProgram" class="form-control input-rounded" placeholder="Kode Warna Hexadesimal" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,12 +171,14 @@
         // console.log('kelik' + id)
         var id = $(this).data('id')
         var nama = $(this).data('nama')
+        var warna = $(this).data('warna')
         var urlBase = '{{ url('master/program/') }}'
         var url = urlBase + '/' + id
 
         $('#modalUbah').modal('show')
         
         $('#namaProgram').val(nama)
+        $('#warnaProgram').val(warna)
         $('#formUbah').attr('action', url);
     })
 

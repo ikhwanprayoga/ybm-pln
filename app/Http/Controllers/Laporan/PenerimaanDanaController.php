@@ -18,7 +18,7 @@ class PenerimaanDanaController extends Controller
             $tahun = date('Y');
         }
         // $tahun = 2019;
-        $tahuns = Pembukuan::distinct()->orderBy('tanggal', 'desc')->get([DB::raw('YEAR(tanggal) as tahun')]);
+        $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
 
         $grafikPenerimaanDana = $this->grafikPenerimaanDana($tahun);
         $grafikSaldoBank = $this->grafikSaldoBank($tahun);

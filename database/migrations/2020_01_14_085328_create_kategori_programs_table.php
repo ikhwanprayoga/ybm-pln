@@ -16,6 +16,7 @@ class CreateKategoriProgramsTable extends Migration
         Schema::create('kategori_programs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_program');
+            $table->string('warna')->nullable();
             $table->timestamps();
         });
     }

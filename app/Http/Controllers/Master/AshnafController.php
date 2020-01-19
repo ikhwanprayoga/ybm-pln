@@ -41,10 +41,12 @@ class AshnafController extends Controller
     {
         $request->validate([
             'nama_ashnaf' => 'required',
+            'warna' => 'required',
         ]);
 
         $data = KategoriAshnaf::create([
-            'nama_ashnaf' => $request->nama_ashnaf
+            'nama_ashnaf' => $request->nama_ashnaf,
+            'warna' => $request->warna,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
@@ -83,7 +85,8 @@ class AshnafController extends Controller
     {
         $data = KategoriAshnaf::find($id);
         $data->update([
-            'nama_ashnaf' => $request->nama_ashnaf
+            'nama_ashnaf' => $request->nama_ashnaf,
+            'warna' => $request->warna,
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil diubah');

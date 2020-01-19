@@ -40,6 +40,7 @@ class StatistikPenyaluranController extends Controller
         return view('laporan.statistik_penyaluran.index', compact(
             'bulans', 
             'tahuns', 
+            'tahun',
             'grafikPieAshnafOrang',
             'grafikPieAshnafRupiah',
             'grafikAshnafOrang', 

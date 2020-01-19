@@ -25,15 +25,15 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Statistik Penyaluran</h4>
+                        <h4 class="card-title">Statistik Penyaluran {{ $tahun }}</h4>
                         <div class="basic-form">
                             <form action="{{ route('laporan.statistik-penyaluran') }}" method="post">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <select class="form-control" name="tahun">
                                         <option>Pilih Tahun</option>
-                                        @foreach ($tahuns as $tahun)
-                                        <option value="{{ $tahun->tahun }}">{{ $tahun->tahun }}</option>
+                                        @foreach ($tahuns as $tahuns)
+                                        <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
                                         @endforeach
                                     </select>
                                     <div class="input-group-append">
@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Persentase Penyaluran Ashnaf per Orang</h4>
+                        <h4 class="card-title">Persentase Penyaluran Ashnaf per Orang {{ $tahun }}</h4>
                         <canvas id="charPersentasiAshnafOrang" width="500" height="250"></canvas>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Persentase Penyaluran Ashnaf per Rupiah</h4>
+                        <h4 class="card-title">Persentase Penyaluran Ashnaf per Rupiah {{ $tahun }}</h4>
                         <canvas id="charPersentasiAshnafRupiah" width="500" height="250"></canvas>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Statistik Penyaluran per Ashnaf (Orang)</h4>
+                        <h4 class="card-title">Statistik Penyaluran per Ashnaf (Orang) {{ $tahun }}</h4>
                         <canvas id="ashnafOrang" width="500" height="200"></canvas>
                         <div class="table-responsive">
                             <table class="table">
@@ -113,7 +113,7 @@
          <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Statistik Penyaluran per Ashnaf (Rupiah)</h4>
+                        <h4 class="card-title">Statistik Penyaluran per Ashnaf (Rupiah) {{ $tahun }}</h4>
                         <canvas id="ashnafRupiah" width="500" height="200"></canvas>
                         <div class="table-responsive">
                             <table class="table">
@@ -151,7 +151,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Persentase Penyaluran Program per Orang</h4>
+                        <h4 class="card-title">Persentase Penyaluran Program per Orang {{ $tahun }}</h4>
                         <canvas id="charPersentasiProgramOrang" width="500" height="250"></canvas>
                     </div>
                 </div>
@@ -160,7 +160,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Persentase Penyaluran Program per Rupiah</h4>
+                        <h4 class="card-title">Persentase Penyaluran Program per Rupiah {{ $tahun }}</h4>
                         <canvas id="charPersentasiProgramRupiah" width="500" height="250"></canvas>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
          <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Statistik Penyaluran per Program (Orang)</h4>
+                        <h4 class="card-title">Statistik Penyaluran per Program (Orang) {{ $tahun }}</h4>
                         <canvas id="programOrang" width="500" height="200"></canvas>
                         <div class="table-responsive">
                             <table class="table">
@@ -209,7 +209,7 @@
          <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Statistik Penyaluran per Program (Rupiah)</h4>
+                        <h4 class="card-title">Statistik Penyaluran per Program (Rupiah) {{ $tahun }}</h4>
                         <canvas id="programRupiah" width="500" height="200"></canvas>
                         <div class="table-responsive">
                             <table class="table">

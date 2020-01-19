@@ -43,7 +43,10 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan'], function () {
     Route::get('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
     Route::post('statistik-penyaluran', 'StatistikPenyaluranController@index')->name('laporan.statistik-penyaluran');
     //rekap penyaluran
-    Route::get('rekap-penyaluran', 'RekapPenyaluranController@index')->name('laporan.rekap-penyaluran');
+    Route::get('rekap-penyaluran-rinci', 'RekapPenyaluranController@rinci')->name('laporan.rekap-penyaluran-rinci');
+    Route::post('rekap-penyaluran-rinci', 'RekapPenyaluranController@rinci')->name('laporan.rekap-penyaluran-rinci');
+    Route::get('rekap-penyaluran-penerima', 'RekapPenyaluranController@penerima')->name('laporan.rekap-penyaluran-penerima');
+    Route::post('rekap-penyaluran-penerima', 'RekapPenyaluranController@penerima')->name('laporan.rekap-penyaluran-penerima');
     //penerimaan data
     Route::get('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
     Route::post('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');

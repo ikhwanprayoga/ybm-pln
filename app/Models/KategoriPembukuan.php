@@ -17,4 +17,5 @@ class KategoriPembukuan extends Model
     {
         return $this->hasMany('App\Models\Pembukuan');
     }
+
 }

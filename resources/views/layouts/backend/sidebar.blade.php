@@ -28,9 +28,10 @@
                 <ul aria-expanded="false">
                     {{-- <li><a href="{{ route('laporan.arus-dana') }}">Arus Dana</a></li> --}}
                     <li><a href="{{ route('laporan.statistik-penyaluran') }}">Statistik Penyaluran</a></li>
-                    {{-- <li><a href="{{ route('laporan.rekap-penyaluran') }}">Rekap Penyaluran</a></li> --}}
+                    <li><a href="{{ route('laporan.penerimaan-dana') }}">Penerimaan Dana & Saldo Bank</a></li>
+                    <li><a href="{{ route('laporan.rekap-penyaluran-rinci') }}">Rekap Penyaluran Rinci</a></li>
+                    <li><a href="{{ route('laporan.rekap-penyaluran-penerima') }}">Rekap Penyaluran Penerima</a></li>
                     {{-- <li><a href="#">Saldo Kas Bank</a></li> --}}
-                    <li><a href="{{ route('laporan.penerimaan-dana') }}">Penerimaan Dana</a></li>
                 </ul>
             </li>
             <li class="nav-label">Master</li>

@@ -26,15 +26,15 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Penerimaan Dana</h4>
+                        <h4 class="card-title">Penerimaan Dana {{ $tahun }}</h4>
                         <div class="basic-form">
                             <form action="{{ route('laporan.penerimaan-dana') }}" method="post">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <select class="form-control" name="tahun">
                                         <option>Pilih Tahun</option>
-                                        @foreach ($tahuns as $tahun)
-                                        <option value="{{ $tahun->tahun }}">{{ $tahun->tahun }}</option>
+                                        @foreach ($tahuns as $tahuns)
+                                        <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
                                         @endforeach
                                     </select>
                                     <div class="input-group-append">
@@ -51,7 +51,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Grafik Penerimaan Dana</h4>
+                        <h4 class="card-title">Grafik Penerimaan Dana {{ $tahun }}</h4>
                         <canvas id="penerimaanDanaChart" width="500" height="250"></canvas>
                         <div class="table-responsive">
                             <table class="table">
@@ -83,6 +83,48 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Grafik Saldo Kas/Bank vs Mutasi Dana {{ $tahun }}</h4>
+                        <canvas id="grafikSaldoBank" width="500" height="250"></canvas>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        @foreach ($grafikSaldoBank['bulan'] as $item)
+                                        <th>{{ $item }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Saldo Bank</td>
+                                        @foreach ($grafikSaldoBank['saldoBank'] as $item)
+                                        <td>{{ Helpers::toRupiah($item) }}</td>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>Droping</td>
+                                        @foreach ($grafikSaldoBank['droping'] as $item)
+                                        <td>{{ Helpers::toRupiah($item) }}</td>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>Pengeluaran</td>
+                                        @foreach ($grafikSaldoBank['pengeluaran'] as $item)
+                                        <td>{{ Helpers::toRupiah($item) }}</td>
+                                        @endforeach
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- #/ container -->
 </div>
@@ -90,8 +132,8 @@
 
 @push('js')
 <script src="{{ asset('plugins/chart.js/Chart.bundle.min.js') }}"></script>
+{{-- grafik penerimaan dana --}}
 <script>
-// single bar chart
     var ctx = document.getElementById("penerimaanDanaChart");
     ctx.height = 150;
     var myChart = new Chart(ctx, {
@@ -115,6 +157,101 @@
                         beginAtZero: true
                     }
                 }]
+            }
+        }
+    });
+</script>
+
+{{-- grafik saldo bank dan mutasi dana --}}
+<script>
+    var ctx = document.getElementById("grafikSaldoBank");
+    ctx.height = 150;
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($grafikSaldoBank['bulan']) !!},
+            type: 'line',
+            // defaultFontFamily: 'Montserrat',
+            datasets: [{
+                label: "Saldo Bank",
+                data: {!! json_encode($grafikSaldoBank['saldoBank']) !!},
+                backgroundColor: 'transparent',
+                borderColor: '#173e43',
+                borderWidth: 3,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: '#173e43',
+
+            }, {
+                label: "Droping",
+                data: {!! json_encode($grafikSaldoBank['droping']) !!},
+                backgroundColor: 'transparent',
+                borderColor: '#ff4900',
+                borderWidth: 3,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: '#ff4900',
+            }, {
+                label: "Pengeluaran",
+                data: {!! json_encode($grafikSaldoBank['pengeluaran']) !!},
+                backgroundColor: 'transparent',
+                borderColor: '#7571F9',
+                borderWidth: 3,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: '#7571F9',
+            }]
+        },
+        options: {
+            responsive: true,
+
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                backgroundColor: '#fff',
+                titleFontFamily: 'Montserrat',
+                bodyFontFamily: 'Montserrat',
+                cornerRadius: 3,
+                intersect: false,
+            },
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    fontFamily: 'Montserrat',
+                },
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Nominal'
+                    }
+                }]
+            },
+            title: {
+                display: false,
+                text: 'Normal Legend'
             }
         }
     });

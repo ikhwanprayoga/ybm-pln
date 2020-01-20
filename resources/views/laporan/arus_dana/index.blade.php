@@ -5,7 +5,38 @@
 @endsection
 
 @push('css')
-    
+<style>
+    #kasDana th {
+        /* padding-top: 12px; */
+        /* padding-bottom: 12px; */
+        text-align: left;
+        background-color: #2b39ba;
+        color: white;
+    }
+
+    .hitam {
+        /* padding-top: 12px; */
+        /* padding-bottom: 12px; */
+        /* text-align: left; */
+        background-color: black;
+        color: white;
+    }
+
+    .hijauMuda {
+        background-color: #81c11e;
+        color: white;
+    }
+
+    .hijauTua {
+        background-color: #5c8a16;
+        color: white;
+    }
+
+    .kuning {
+        background-color: #c3c340;
+        color: white;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -28,7 +59,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Arus Dana</h4>
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="kasDana">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -37,97 +68,88 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="8" scope="row"></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">A</td>
-                                        <td colspan="2">SALDO AWAL</td>
-                                        <td>123123123</td>
+                                        <td class="hitam" scope="row">A</td>
+                                        <td class="hitam" colspan="2">SALDO AWAL</td>
+                                        <td class="hijauMuda" align="right">{{ Helpers::toRupiah($data['saldoAwal']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="8" scope="row"></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">B</td>
-                                        <td colspan="">PENERIMAAN DANA</td>
-                                        <td colspan="">Droping</td>
-                                        <td>123213123</td>
+                                        <td class="hijauTua" scope="row">B</td>
+                                        <td class="hijauTua" colspan="">PENERIMAAN DANA</td>
+                                        <td class="hijauTua" colspan="">Droping</td>
+                                        <td class="hijauMuda" align="right">{{ Helpers::toRupiah($data['droping']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" scope="row"></td>
-                                        <td colspan="">Lainnya</td>
-                                        <td>123213123</td>
+                                        <td colspan="2"></td>
+                                        <td class="hijauTua">Lainnya</td>
+                                        <td class="hijauMuda" align="right">{{ Helpers::toRupiah($data['lainnya']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="8" scope="row"></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">C</td>
-                                        <td colspan="">PENGELUARAN DANA</td>
-                                        <td colspan="6"></td>
+                                        <td class="hijauTua" scope="row">C</td>
+                                        <td class="hijauTua" colspan="">PENGELUARAN DANA</td>
+                                        <td class="hijauTua" colspan="6"></td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">PROGRAM</td>
-                                        <td colspan="">JUMLAH PENERIMA MANFAAT</td>
-                                        <td colspan="">JUMLAH DLM Rp.</td>
+                                        <td class="hijauTua" colspan="">PROGRAM</td>
+                                        <td class="hijauTua" colspan="">JUMLAH PENERIMA MANFAAT</td>
+                                        <td class="hijauTua" colspan="">JUMLAH DLM Rp.</td>
                                         <td colspan=""></td>
-                                        <td colspan="">ASHNAF</td>
-                                        <td colspan="">JUMLAH PENERIMA MANFAAT</td>
-                                        <td colspan="">JUMLAH DLM Rp.</td>
+                                        <td class="hijauTua" colspan="">ASHNAF</td>
+                                        <td class="hijauTua" colspan="">JUMLAH PENERIMA MANFAAT</td>
+                                        <td class="hijauTua" colspan="">JUMLAH DLM Rp.</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">A. PENDIDIKAN</td>
-                                        <td colspan="">1231</td>
-                                        <td colspan="">12321</td>
+                                        <td class="hijauMuda" colspan="">A. PENDIDIKAN</td>
+                                        <td class="hijauMuda" colspan="" align="right">{{ Helpers::toRupiah($data['programPendidikanOrang']) }}</td>
+                                        <td class="hijauMuda" colspan="" align="right">{{ Helpers::toRupiah($data['programPendidikanRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">A. FAKIR MISKIN</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">A. FAKIR MISKIN</td>
+                                        <td class="hijauMuda" colspan="" align="right">{{ Helpers::toRupiah($data['ashnafFakirMiskinOrang']) }}</td>
+                                        <td class="hijauMuda" colspan="" align="right">{{ Helpers::toRupiah($data['ashnafFakirMiskinRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">B. KESEHATAN</td>
-                                        <td colspan="">1231</td>
-                                        <td colspan="">12321</td>
+                                        <td class="hijauMuda" colspan="">B. KESEHATAN</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programKesehatanOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programKesehatanRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">B. GAHRIMIN</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">B. GAHRIMIN</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafGharimOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafGharimRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">C. EKONOMI</td>
-                                        <td colspan="">1231</td>
-                                        <td colspan="">12321</td>
+                                        <td class="hijauMuda" colspan="">C. EKONOMI</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programEkonomiOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programEkonomiRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">C. RIQOB</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">C. RIQOB</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafRiqobOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafRiqobRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">D. DAKWAH</td>
-                                        <td colspan="">1231</td>
-                                        <td colspan="">12321</td>
+                                        <td class="hijauMuda" colspan="">D. DAKWAH</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programDakwahOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programDakwahRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">D. FISABILILLAH</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">D. FISABILILLAH</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafFisabilillahOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafFisabilillahRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">E. SOSIAL KEMANUSIAN</td>
-                                        <td colspan="">1231</td>
-                                        <td colspan="">12321</td>
+                                        <td class="hijauMuda" colspan="">E. SOSIAL KEMANUSIAN</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programSosialKemanusianOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['programSosialKemanusianRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">E. IBNU SABIL</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">E. IBNU SABIL</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafIbnuSabilOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafIbnuSabilRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
@@ -135,58 +157,49 @@
                                         <td colspan=""></td>
                                         <td colspan=""></td>
                                         <td colspan=""></td>
-                                        <td colspan="">F. MUALAF</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
+                                        <td class="hijauMuda" colspan="">F. MUALAF</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafMualafOrang']) }}</td>
+                                        <td colspan="" class="hijauMuda" align="right">{{ Helpers::toRupiah($data['ashnafMualafRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">JUMLAH *)</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.222.112</td>
+                                        <td class="kuning" colspan="">JUMLAH *)</td>
+                                        <td colspan="" class="kuning" align="right">{{ Helpers::toRupiah($data['jumlahProgramOrang']) }}</td>
+                                        <td colspan="" class="kuning" align="right">{{ Helpers::toRupiah($data['jumlahProgramRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">JUMLAH *)</td>
-                                        <td colspan="">12</td>
-                                        <td colspan="">1.223.222</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="8" scope="row"></td>
+                                        <td class="kuning" colspan="">JUMLAH *)</td>
+                                        <td colspan="" class="kuning" align="right">{{ Helpers::toRupiah($data['jumlahAshnafOrang']) }}</td>
+                                        <td colspan="" class="kuning" align="right">{{ Helpers::toRupiah($data['jumlahAshnafRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">OPERASIONAL</td>
+                                        <td class="hijauTua" colspan="">OPERASIONAL</td>
+                                        <td class="hijauTua" colspan=""></td>
+                                        <td class="hijauMuda" colspan="" align="right">{{ Helpers::toRupiah($data['programOperasionalRupiah']) }}</td>
                                         <td colspan=""></td>
-                                        <td colspan="">4.412.321</td>
-                                        <td colspan=""></td>
-                                        <td colspan="">G. AMIL</td>
-                                        <td colspan=""></td>
-                                        <td colspan="">1.223.222</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="8" scope="row"></td>
+                                        <td class="hijauTua" colspan="">G. AMIL</td>
+                                        <td class="hijauTua" colspan=""></td>
+                                        <td class="kuning" colspan="" align="right">{{ Helpers::toRupiah($data['ashnafAmilRupiah']) }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row"></td>
-                                        <td colspan="">TOTAL PENGELUARAN DANA</td>
-                                        <td colspan=""></td>
-                                        <td colspan="">4.412.321</td>
+                                        <td class="hijauTua" colspan="">TOTAL PENGELUARAN DANA</td>
+                                        <td class="hijauTua" colspan=""></td>
+                                        <td class="kuning" colspan="" align="right">{{ Helpers::toRupiah($data['totalPengeluaranDana']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">D</td>
-                                        <td colspan="">SURPLUS / DEFISIT DANA</td>
-                                        <td colspan=""></td>
-                                        <td colspan="">4.412.321</td>
+                                        <td class="hijauTua" scope="row">D</td>
+                                        <td class="hijauTua" colspan="">SURPLUS / DEFISIT DANA</td>
+                                        <td class="hijauTua" colspan=""></td>
+                                        <td class="kuning" colspan="" align="right">{{ Helpers::toRupiah($data['surplusDefisitDana']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="8" scope="row"></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">D</td>
-                                        <td colspan="">SALDO AKHIR</td>
-                                        <td colspan=""></td>
-                                        <td colspan="">4.412.321</td>
+                                        <td class="hitam" scope="row">D</td>
+                                        <td class="hitam" colspan="">SALDO AKHIR</td>
+                                        <td class="hitam" colspan=""></td>
+                                        <td class="hitam" colspan="" align="right">{{ Helpers::toRupiah($data['saldoAkhir']) }}</td>
                                         <td colspan="4"></td>
                                     </tr>
                                 </tbody>

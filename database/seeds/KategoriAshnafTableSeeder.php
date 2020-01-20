@@ -17,7 +17,7 @@ class KategoriAshnafTableSeeder extends Seeder
             ' ',
             'Fakir Miskin', 
             'Gharimin', 
-            'Rizob', 
+            'Riqob', 
             'Fisabilillah', 
             'Ibnu Sabil', 
             'Mualaf', 

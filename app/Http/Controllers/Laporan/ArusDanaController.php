@@ -10,22 +10,34 @@ use Illuminate\Support\Facades\DB;
 
 class ArusDanaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tahun = 2019;
+        if (isset($request->tahun)) {
+            $tahun = $request->tahun;
+        } else {
+            $tahun = date('Y');
+        }
+        // $tahun = 2019;
+
+        $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
+        $cekTahun = Pembukuan::whereYear('tanggal', $tahun)->first();
         $katPembukuan = KategoriPembukuan::all();
 
-        foreach ($katPembukuan as $key => $value) {
-            // for ($i=1; $i <= 12; $i++) { 
+        if (isset($cekTahun)) {
+            foreach ($katPembukuan as $key => $value) {
                 $dataSaldo[] = Pembukuan::where('kategori_pembukuan_id', $value->id)
                                     ->whereYear('tanggal', $tahun)
                                     // ->whereMonth('tanggal', $i)
                                     ->orderBy('tanggal', 'asc')
                                     ->first()->nominal;
-            // }
+            }
+            $data['saldoAwal'] = array_sum($dataSaldo); 
+        } else {
+            $data['saldoAwal'] = 0;
         }
+        
         // return $dataSaldo;
-        $data['saldoAwal'] = array_sum($dataSaldo); 
+        
         if ($tahun == 2019) {
             $data['saldoAwal'] = array_sum($dataSaldo) - 400000000;
         }
@@ -69,6 +81,6 @@ class ArusDanaController extends Controller
         $data['saldoAkhir'] = $data['saldoAwal'] + $data['droping'] + $data['lainnya'] - $data['totalPengeluaranDana'];
 
         // return $data;
-        return view('laporan.arus_dana.index', compact('data'));
+        return view('laporan.arus_dana.index', compact('tahuns', 'tahun', 'data'));
     }
 }

@@ -57,7 +57,33 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Arus Dana</h4>
+                        <h4 class="card-title">Arus Dana {{ $tahun }}</h4>
+                        <div class="basic-form">
+                            <form action="{{ route('laporan.arus-dana') }}" method="post">
+                                @csrf
+                                <div class="input-group mb-3">
+                                    <select class="form-control" name="tahun">
+                                        <option>Pilih Tahun</option>
+                                        @foreach ($tahuns as $tahuns)
+                                        <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary" type="button">Lihat</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Laporan Arus Dana {{ $tahun }}</h4>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="kasDana">
                                 <thead>

@@ -35,7 +35,7 @@ Route::group(['prefix' => 'pembukuan', 'middleware' => ['auth']], function () {
     Route::get('/{id}/edit', 'PembukuanController@edit')->name('pembukuan.kas.edit');
     Route::post('/{id}/update', 'PembukuanController@update')->name('pembukuan.kas.update');
     Route::post('/{id}/destroy', 'PembukuanController@destroy')->name('pembukuan.kas.destroy');
-}); 
+});
 
 Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => ['auth']], function () {
     Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');

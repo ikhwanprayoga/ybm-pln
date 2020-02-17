@@ -43,6 +43,7 @@
                     <li><a href="{{ route('pembukuan.index') }}">Jenis Pembukuan</a></li>
                     <li><a href="{{ route('ashnaf.index') }}">Jenis Ashnaf</a></li>
                     <li><a href="{{ route('program.index') }}">Jenis Program</a></li>
+                    <li><a href="{{ route('periode.index') }}">Periode</a></li>
                 </ul>
             </li>
         </ul>

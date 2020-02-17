@@ -57,4 +57,5 @@ Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['
     Route::resource('pembukuan', 'PembukuanController');
     Route::resource('ashnaf', 'AshnafController');
     Route::resource('program', 'ProgramController');
+    Route::resource('periode', 'PeriodeController');
 });

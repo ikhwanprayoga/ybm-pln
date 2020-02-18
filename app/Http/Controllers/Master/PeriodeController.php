@@ -53,6 +53,51 @@ class PeriodeController extends Controller
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
+    public function change(Request $request)
+    {
+        $idPeriode = $request->idPeriode;
+
+        $periodes = Periode::all();
+        $periode = $periodes->where('id', $idPeriode)->first();
+
+        if ($periode->status == 1) {
+            $periode->update(['status' => 0]);
+            return response()->json([
+                'status' => 1,
+                'periode' => $periode,
+                'pesan' => 'Periode berhasil di nonaktifkan!'
+            ]);
+        } else {
+            if ($periodes->where('status', 1)->count() > 0) {
+                return response()->json([
+                    'status' => 0,
+                    'periode' => $periode,
+                    'pesan' => 'Terdapat periode yang masih aktif!'
+                ]);
+            } else {
+                $periode->update(['status' => 1]);
+                return response()->json([
+                    'status' => 1,
+                    'periode' => $periode,
+                    'pesan' => 'Periode berhasil diaktifkan!'
+                ]);
+            }
+        }
+
+    }
+
+    public function cek_status()
+    {
+        $periodes = Periode::all();
+
+        foreach ($periodes as $key => $periode) {
+            $data[$key]['id'] = $periode->id;
+            $data[$key]['status'] = $periode->status;
+        }
+
+        return response()->json($data);
+    }
+
     /**
      * Display the specified resource.
      *

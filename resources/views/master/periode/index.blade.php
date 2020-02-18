@@ -7,6 +7,11 @@
 @push('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" integrity="sha256-jO7D3fIsAq+jB8Xt3NI5vBf3k4tvtHwzp8ISLQG4UWU=" crossorigin="anonymous" />
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<style>
+    .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+    .toggle.ios .toggle-handle { border-radius: 20px; }
+</style>
 @endpush
 
 @section('content')
@@ -64,7 +69,9 @@
                                     <tr>
                                         <th>{{ $loop->iteration }}</th>
                                         <td>{{ $item->periode }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>
+                                            <input type="checkbox" id="periode_{{ $item->id }}" class="changeStatus" data-id="{{ $item->id }}" {{ ($item->status == 1) ? 'checked' : '' }} data-toggle="toggle" data-style="ios" data-on="Aktif" data-off="Tidak Aktif">
+                                        </td>
                                         <td>
                                             <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->periode }}" data-status="{{ $item->status }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
                                             <button type="button" data-id="{{ $item->id }}" class="btn mb -1 btn-danger tombolHapus" >Hapus</button>
@@ -167,17 +174,67 @@
 @endsection
 
 @push('js')
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
 <script>
     $('.periodeDate').datepicker({
-        format: "mm-yyyy",
+        format: "yyyy-mm",
         autoclose: true,
         minViewMode: 'months',
         viewMode: 'months',
         pickTime: false
     })
 
-    $('.tombolUbah').click(function () { 
+    $('.changeStatus').on('change', function () {
+        var id = $(this).data('id')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'{{ route('periode.ubah.status') }}',
+            data:{
+                idPeriode:id,
+            },
+            success:function(data){
+                console.log(data)
+                if (data.status == 1) {
+                    toastrSuccess(data.pesan)
+                } else {
+                    toastrError(data.pesan)
+                }
+                // cekStatusPeriode()
+                location.reload()
+                // console.log('dkfjd'+id)
+                // if (data.periode.status == 1) {
+                //     $('#periode_'+id).bootstrapToggle('on')
+                // } else {
+                //     $('#periode_'+id).bootstrapToggle('off')
+                // }
+                // alert(data.success);
+            }
+        });
+    })
+
+    function cekStatusPeriode() {
+        $.get('{{ route('periode.cek.status') }}', function (data) {
+            // console.log(data)
+            $.each(data, function (indexInArray, valueOfElement) {
+                if (valueOfElement.status == 1) {
+                    var stat = 'on'
+                } else {
+                    var stat = 'off'
+                }
+                // $('#periode_'+valueOfElement.id).bootstrapToggle(stat)
+            });
+        })
+    }
+
+    // cekStatusPeriode()
+
+    $('.tombolUbah').click(function () {
         // console.log('kelik' + id)
         var id = $(this).data('id')
         var nama = $(this).data('nama')
@@ -185,13 +242,13 @@
         var url = urlBase + '/' + id
 
         $('#modalUbah').modal('show')
-        
+
         $('#periode').val(nama)
         $('#statusPeriode').val(status)
         $('#formUbah').attr('action', url);
     })
 
-    $('.tombolHapus').click(function () { 
+    $('.tombolHapus').click(function () {
         var id = $(this).data('id')
         var urlBase = '{{ url('master/periode/') }}'
         var url = urlBase + '/' + id
@@ -199,5 +256,47 @@
         $('#modalHapus').modal('show')
         $('#formHapus').attr('action', url);
     })
+
+    function toastrSuccess(pesan) {
+        toastr.success(pesan, "Sukses", {
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            positionClass: "toast-top-right",
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+        })
+    }
+
+    function toastrError(pesan) {
+        toastr.error(pesan, "Gagal", {
+            positionClass: "toast-top-right",
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+        })
+    }
 </script>
 @endpush

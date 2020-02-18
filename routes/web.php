@@ -58,4 +58,6 @@ Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['
     Route::resource('ashnaf', 'AshnafController');
     Route::resource('program', 'ProgramController');
     Route::resource('periode', 'PeriodeController');
+    Route::post('periode/change', 'PeriodeController@change')->name('periode.ubah.status');
+    Route::get('periode/cek/status', 'PeriodeController@cek_status')->name('periode.cek.status');
 });

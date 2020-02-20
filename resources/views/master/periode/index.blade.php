@@ -201,9 +201,11 @@
             success:function(data){
                 console.log(data)
                 if (data.status == 1) {
-                    toastrSuccess(data.pesan)
+                    alert(data.pesan)
+                    // toastrSuccess(data.pesan)
                 } else {
-                    toastrError(data.pesan)
+                    alert(data.pesan)
+                    // toastrError(data.pesan)
                 }
                 // cekStatusPeriode()
                 location.reload()

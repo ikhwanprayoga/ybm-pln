@@ -1,4 +1,4 @@
-<div class="nk-sidebar">           
+<div class="nk-sidebar">
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label">Menu</li>
@@ -26,6 +26,14 @@
                     <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Laporan</span>
                 </a>
                 <ul aria-expanded="false">
+                    {{-- <li><a href="#">Laporan Pembukuan</a></li> --}}
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Laporan Pembukuan</a>
+                        <ul aria-expanded="false">
+                            @foreach (Helpers::kategoriPembukuan() as $item)
+                            <li><a href="{{ route('laporan.pembukuan', ['slug'=>$item->slug]) }}">{{ $item->kode }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
                     <li><a href="{{ route('laporan.statistik-penyaluran') }}">Statistik Penyaluran</a></li>
                     <li><a href="{{ route('laporan.penerimaan-dana') }}">Penerimaan Dana & Saldo Bank</a></li>
                     <li><a href="{{ route('laporan.rekap-penyaluran-rinci') }}">Rekap Penyaluran Rinci</a></li>

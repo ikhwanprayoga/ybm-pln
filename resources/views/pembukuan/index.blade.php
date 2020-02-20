@@ -66,13 +66,13 @@ a:hover {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h4 class="card-title">Pembukuan {{ $kategoriPembukuan->nama_pembukuan }}</h4>
+                                <h4 class="card-title">Pembukuan {{ $kategoriPembukuan->nama_pembukuan }} Periode {{ Helpers::periode($periode) }}</h4>
                             </div>
                             <div class="col-lg-6" style="text-align: right;">
                                 {{-- <button type="button" class="btn mb-1 btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Pembukuan</button> --}}
                             </div>
                         </div>
-                        <div class="table-responsive"> 
+                        <div class="table-responsive">
                             <table class="table table-bordered table-striped verticle-middle">
                                 <thead>
                                     <tr>
@@ -88,18 +88,23 @@ a:hover {
                                         <th scope="col">Pen. Manfaat</th>
                                     </tr>
                                 </thead>
+                                @if ($isPeriode == 1)
                                 <tbody>
                                     @php
-                                        $saldo = 0;
+                                        $saldo = $saldoPeriodeLalu;
                                         $tDebet = 0;
                                         $tKredit = 0;
                                     @endphp
+                                    <tr>
+                                        <td colspan="6">Saldo bulan {{ Helpers::periode($periode, 'sebelum') }}</td>
+                                        <td colspan="4"><h5>{{ Helpers::toRupiah($saldoPeriodeLalu) }}</h5></td>
+                                    </tr>
                                     @foreach ($datas as $data)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <span>
-                                                <a href="#" class="tombolUbah" data-id="{{ $data->id }}" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil color-muted m-r-5"></i> </a>&nbsp; 
+                                                <a href="#" class="tombolUbah" data-id="{{ $data->id }}" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil color-muted m-r-5"></i> </a>&nbsp;
                                                 <a href="#" class="tombolHapus" data-id="{{ $data->id }}" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-close color-danger"></i></a>
                                             </span>
                                         </td>
@@ -151,6 +156,13 @@ a:hover {
                                         <td colspan="2" align="right"><h5>Rp. {{ Helpers::toRupiah($saldo) }}</h5></td>
                                     </tr>
                                 </tbody>
+                                @else
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" style="text-align:center">Tidak terdapat periode yang aktif</td>
+                                        </tr>
+                                    </tbody>
+                                @endif
                             </table>
                         </div>
                     </div>
@@ -323,9 +335,11 @@ a:hover {
 @endsection
 
 @section('float-button')
+@if ($isPeriode == 1)
 <a href="#" class="float-botton">
     <i class="fa fa-plus my-float" style="font-size: 31px;"></i>
-</a>  
+</a>
+@endif
 @endsection
 
 @push('js')
@@ -334,17 +348,27 @@ a:hover {
 <script src="{{ asset('plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 <script src="{{ asset('js/mask.min.js') }}"></script>
 <script>
+    // var currentTime = new Date();
+    var periode = "{!! $periode !!}";
+    var currentTime = new Date(periode);
+    // First Date Of the month
+    var startDateFrom = new Date(currentTime.getFullYear(),currentTime.getMonth(),1);
+    // Last Date Of the Month
+    var startDateTo = new Date(currentTime.getFullYear(),currentTime.getMonth() +1,0);
+    console.log(currentTime)
     $('#tanggalTambah').bootstrapMaterialDatePicker({
+        minDate : startDateFrom,
+        maxDate : startDateTo,
         format: 'YYYY-MM-DD',
         time: false,
         date: true
     });
 
-    $('.float-botton').click(function () { 
+    $('.float-botton').click(function () {
         $('#modalTambah').modal('show')
     })
 
-    $('.tombolUbah').click(function () { 
+    $('.tombolUbah').click(function () {
         // console.log('edit')
         // $('#nominalUbah').mask('000.000.000.000.000.000', {reverse: true})
         $('#modalUbah').modal('show')
@@ -352,7 +376,7 @@ a:hover {
         var url = '{{ url('pembukuan') }}'
         var id = $(this).data('id')
 
-        $.getJSON(url+'/'+id+'/edit', function (data) { 
+        $.getJSON(url+'/'+id+'/edit', function (data) {
             console.log(data)
             // var nominal = data.nominal
             $('#tanggalUbah').val(data.tanggal)
@@ -365,6 +389,8 @@ a:hover {
         })
 
         $('#tanggalUbah').bootstrapMaterialDatePicker({
+            minDate : startDateFrom,
+            maxDate : startDateTo,
             format: 'YYYY-MM-DD',
             time: false,
             date: true
@@ -373,7 +399,7 @@ a:hover {
         $('#formUbah').attr('action', url+'/'+id+'/update');
     })
 
-    $('.tombolHapus').click(function () { 
+    $('.tombolHapus').click(function () {
         // console.log('hapus')
         $('#modalHapus').modal('show')
         var id = $(this).data('id')

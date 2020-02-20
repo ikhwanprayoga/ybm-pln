@@ -68,7 +68,7 @@
                                     @foreach ($data as $item)
                                     <tr>
                                         <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $item->periode }}</td>
+                                        <td>{{ Helpers::periode($item->periode) }}</td>
                                         <td>
                                             <input type="checkbox" id="periode_{{ $item->id }}" class="changeStatus" data-id="{{ $item->id }}" {{ ($item->status == 1) ? 'checked' : '' }} data-toggle="toggle" data-style="ios" data-on="Aktif" data-off="Tidak Aktif">
                                         </td>

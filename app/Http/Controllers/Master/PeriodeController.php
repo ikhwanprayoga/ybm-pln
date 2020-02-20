@@ -16,7 +16,7 @@ class PeriodeController extends Controller
      */
     public function index()
     {
-        $data = Periode::orderBy('id', 'desc')->get();
+        $data = Periode::orderBy('periode', 'desc')->get();
 
         return view('master.periode.index', compact('data'));
     }

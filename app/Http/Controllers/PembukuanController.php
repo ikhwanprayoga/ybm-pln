@@ -3,25 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Models\KategoriPembukuan;
 use App\Models\KategoriAshnaf;
 use App\Models\KategoriProgram;
 use App\Models\Pembukuan;
+use App\Models\Periode;
 
 class PembukuanController extends Controller
 {
     public function index($slug)
     {
+        $cekPeriode = Periode::where('status', 1)->first();
         $kategoriPembukuan = KategoriPembukuan::where('slug', $slug)->first();
-        $datas = Pembukuan::with('ashnaf', 'program', 'pembukuan')
-                        ->where('kategori_pembukuan_id', $kategoriPembukuan->id)
-                        ->orderBy('tanggal', 'asc')
-                        ->get();
+        $datas = [];
+        $saldoPeriodeLalu = 0;
+        if (isset($cekPeriode)) {
+            $isPeriode = 1;
+            $periode = $cekPeriode->periode;
+
+            $saldo = Pembukuan::where('kategori_pembukuan_id', $kategoriPembukuan->id)->where('tanggal', '<', $periode.'-01')->get();
+            $debetPeriodeLalu = $saldo->where('tipe', 'debet')->sum('nominal');
+            $kreditPeriodeLalu = $saldo->where('tipe', 'kredit')->sum('nominal');
+            $saldoPeriodeLalu = $debetPeriodeLalu-$kreditPeriodeLalu;
+
+            $datas = Pembukuan::with('ashnaf', 'program', 'pembukuan')
+                            ->where('kategori_pembukuan_id', $kategoriPembukuan->id)
+                            ->where('tanggal', 'Like', $cekPeriode->periode.'%')
+                            ->orderBy('tanggal', 'asc')
+                            ->get();
+        } else {
+            $isPeriode = 0;
+            $periode = date('Y-m');
+        }
+
+        // return $periode;
+        // return $saldoPeriodeLalu;
         $ashnafs = KategoriAshnaf::all();
         $programs = KategoriProgram::all();
 
-        return view('pembukuan.index', compact('datas', 'kategoriPembukuan', 'ashnafs', 'programs'));
+        return view('pembukuan.index', compact('isPeriode', 'periode', 'saldoPeriodeLalu', 'datas', 'kategoriPembukuan', 'ashnafs', 'programs'));
     }
 
     public function store(Request $request, $slug)
@@ -38,7 +60,7 @@ class PembukuanController extends Controller
 
         $userId = auth()->user()->id;
         $kategoriPembukuanId = KategoriPembukuan::where('slug', $slug)->first()->id;
-        
+
         $pembukuan = Pembukuan::create([
             'kategori_pembukuan_id' => $kategoriPembukuanId,
             'kategori_ashnaf_id' => $request->ashnaf,

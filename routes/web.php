@@ -38,6 +38,11 @@ Route::group(['prefix' => 'pembukuan', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => ['auth']], function () {
+    //laporan pembukuan
+    Route::get('pembukuan/{slug}', 'LaporanController@index')->name('laporan.pembukuan');
+    Route::post('pembukuan/{slug}', 'LaporanController@index')->name('laporan.pembukuan');
+    Route::get('pembukuan/{slug}/export/{tahun}', 'LaporanController@export')->name('laporan.pembukuan.export');
+    //arus data
     Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
     Route::post('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
     //statistik penyaluran dana

@@ -129,7 +129,14 @@ class PeriodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Periode::find($id);
+        $status = $data->status;
+        $data->update([
+            'periode' => $request->periode,
+            'status' => $status
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     /**

@@ -4,7 +4,7 @@
             <li class="nav-label">Menu</li>
             <li>
                 <a href="{{ route('beranda') }}" aria-expanded="false">
-                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                    <i class="icon-home menu-icon"></i><span class="nav-text">Dashboard</span>
                 </a>
                 {{-- <ul aria-expanded="false">
                     <li><a href="./index.html">Home 1</a></li>
@@ -13,7 +13,7 @@
             </li>
             <li class="mega-menu mega-menu-sm">
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Pembukuan</span>
+                    <i class="icon-notebook menu-icon"></i><span class="nav-text">Pembukuan</span>
                 </a>
                 <ul aria-expanded="false">
                     @foreach (Helpers::kategoriPembukuan() as $item)
@@ -23,7 +23,7 @@
             </li>
             <li class="mega-menu mega-menu-sm">
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Laporan</span>
+                    <i class="icon-graph menu-icon"></i><span class="nav-text">Laporan</span>
                 </a>
                 <ul aria-expanded="false">
                     {{-- <li><a href="#">Laporan Pembukuan</a></li> --}}
@@ -42,10 +42,11 @@
                     {{-- <li><a href="#">Saldo Kas Bank</a></li> --}}
                 </ul>
             </li>
+            @if (auth()->user()->level == 'superadmin')
             <li class="nav-label">Master</li>
             <li class="mega-menu mega-menu-sm">
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Master Data</span>
+                    <i class="icon-menu menu-icon"></i><span class="nav-text">Master Data</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('pembukuan.index') }}">Jenis Pembukuan</a></li>
@@ -54,6 +55,7 @@
                     <li><a href="{{ route('periode.index') }}">Periode</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </div>
 </div>

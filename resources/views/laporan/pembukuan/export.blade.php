@@ -31,7 +31,7 @@
                         $debet = 0;
                     }
                 @endphp
-                {{ ($data->tipe == 'debet') ? Helpers::toRupiah($data->nominal) : '' }}
+                {{ ($data->tipe == 'debet') ? $data->nominal : '' }}
             </td>
             <td align=right>
                 @php
@@ -41,7 +41,7 @@
                     $kredit = 0;
                 }
                 @endphp
-                {{ ($data->tipe == 'kredit') ? Helpers::toRupiah($data->nominal) : '' }}
+                {{ ($data->tipe == 'kredit') ? $data->nominal : '' }}
             </td>
             <td align=right>
                 @php
@@ -49,7 +49,7 @@
                     $tDebet = $tDebet+$debet;
                     $tKredit = $tKredit+$kredit;
                 @endphp
-                {{ Helpers::toRupiah($saldo) }}
+                {{ $saldo }}
             </td>
             <td>{{ $data->ashnaf->nama_ashnaf }}</td>
             <td>{{ $data->program->nama_program }}</td>

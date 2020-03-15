@@ -44,6 +44,11 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -51,6 +56,13 @@
                                 <h4 class="card-title">Master Periode</h4>
                             </div>
                             <div class="col-md-6" style="text-align: right;">
+                                <div class="form-group">
+                                    <select class="form-control" name="tahun" id="pilihTahun">
+                                        @foreach ($tahuns as $tahun)
+                                        <option value="{{ $tahun }}" {{ $tahun==$tahunAktif ? 'selected' : '' }}>{{ $tahun }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <button type="button" class="btn mb-1 btn-primary" data-toggle="modal" data-target="#modalTambah">Tambah Periode</button>
                             </div>
                         </div>
@@ -66,7 +78,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $item)
-                                    <tr>
+                                    <tr class="{{ substr($item->periode, 0, 4) }}">
                                         <th>{{ $loop->iteration }}</th>
                                         <td>{{ Helpers::periode($item->periode) }}</td>
                                         <td>
@@ -102,7 +114,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" name="periode" id="" class="form-control input-rounded periodeDate" placeholder="Masukkan Periode Baru" required>
+                            <input type="number" name="periode" id="" class="form-control input-rounded" placeholder="Masukkan Tahun Periode Baru" required>
                         </div>
                         {{-- <div class="form-group">
                             <input type="text" name="status" id="" class="form-control input-rounded" placeholder="Status" required>
@@ -131,7 +143,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" name="periode" id="periode" class="form-control input-rounded periodeDate" placeholder="Masukkan Periode Baru" required>
+                            <input type="number" name="periode" id="periode" class="form-control input-rounded" placeholder="Masukkan Tahun Periode Baru" required>
                         </div>
                         {{-- <div class="form-group">
                             <input type="text" name="status" id="statusPeriode" class="form-control input-rounded" placeholder="Status" required>
@@ -177,6 +189,37 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
 <script>
+    var tahunAktif = '{{ $tahunAktif }}'
+    var listTahun = []
+
+    $('#pilihTahun option').each(function () {
+        listTahun.push($(this).val())
+    })
+    
+    listTahun.forEach(element => {
+        console.log(element)
+        if (tahunAktif == element) {
+            $('.'+element).show()
+        } else if (tahunAktif=='') {
+            $('.'+element).show()
+        } else {
+            $('.'+element).hide()
+        }
+    });
+
+    $('#pilihTahun').on('change', function () {
+        var tahun = $(this).val()
+        
+        listTahun.forEach(element => {
+            if (tahun == element) {
+                $('.'+element).show()
+            } else {
+                $('.'+element).hide()
+            }
+        });
+
+    })
+
     $('.periodeDate').datepicker({
         format: "yyyy-mm",
         autoclose: true,

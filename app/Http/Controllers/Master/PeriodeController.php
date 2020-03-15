@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Periode;
 
@@ -16,9 +17,21 @@ class PeriodeController extends Controller
      */
     public function index()
     {
-        $data = Periode::orderBy('periode', 'desc')->get();
+        $data = Periode::orderBy('periode', 'asc')->get();
+        
+        if ($tahunAktif = $data->where('status', 1)->first()) {
+            $tahunAktif = substr($tahunAktif->periode, 0, 4);
+        } else {
+            $tahunAktif = null;
+        }
+        
+        foreach ($data as $key => $value) {
+            $tahun[] = substr($value->periode, 0, 4);
+        }
 
-        return view('master.periode.index', compact('data'));
+        $tahuns = array_unique($tahun);
+
+        return view('master.periode.index', compact('data', 'tahuns', 'tahunAktif'));
     }
 
     /**
@@ -45,10 +58,23 @@ class PeriodeController extends Controller
             // 'status' => 'required',
         ]);
 
-        $data = Periode::create([
-            'periode' => $request->periode,
-            'status' => 0,
-        ]);
+        $periode = $request->periode;
+
+        $cekPeriode = Periode::where('periode', 'like', '%'.$periode.'%')->get();
+
+        if ($cekPeriode->count() > 0) {
+            return redirect()->back()->with('error', 'Periode yang dimasukkan sudah terdapat pada sistem');
+        } else {
+            for ($i=1; $i <= 12; $i++) { 
+                if ($i < 10) {
+                    $i = '0'.$i;
+                }
+                $data = Periode::create([
+                    'periode' => $periode.'-'.$i,
+                    'status' => 0,
+                ]);
+            }
+        }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }

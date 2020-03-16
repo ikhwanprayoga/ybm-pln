@@ -66,3 +66,15 @@ Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['
     Route::post('periode/change', 'PeriodeController@change')->name('periode.ubah.status');
     Route::get('periode/cek/status', 'PeriodeController@cek_status')->name('periode.cek.status');
 });
+
+Route::get('tes-log', function () {
+    $array = [
+        'pembukuan_id' => 1,
+        'user' => 'operator',
+        'tipe' => 'debet',
+        'aktivitas' => 'post',
+        'nominal' => 1000000,
+        'keterangan' => 'pemasukan'
+    ];
+    Log::catat($array);
+});

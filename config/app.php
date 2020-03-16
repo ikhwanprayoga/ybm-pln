@@ -177,6 +177,7 @@ return [
 
         //custom
         App\Providers\HelpersServiceProvider::class,
+        App\Providers\LogServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
@@ -232,6 +233,7 @@ return [
 
         //custom
         'Helpers' => App\Helpers\HelpersServiceProvider::class,
+        'Log' => App\Helpers\LogServiceProvider::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 

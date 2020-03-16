@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Helpers\LogServiceProvider;
 
 use App\Models\KategoriPembukuan;
 use App\Models\KategoriAshnaf;
@@ -73,6 +74,17 @@ class PembukuanController extends Controller
             'user_id' => $userId,
         ]);
 
+        $log = [
+            'pembukuan_id' => $pembukuan->id,
+            'user' => auth()->user()->name,
+            'tipe' => $request->tipe,
+            'aktivitas' => 'store',
+            'nominal' => preg_replace('/\D/', '', $request->nominal),
+            'keterangan' => $request->uraian
+        ];
+
+        LogServiceProvider::catat($log);
+
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
@@ -97,7 +109,18 @@ class PembukuanController extends Controller
 
         $userId = auth()->user()->id;
 
-        $pembukuan = Pembukuan::find($id)->update([
+        $pembukuan = Pembukuan::find($id);
+
+        $log = [
+            'pembukuan_id' => $id,
+            'user' => auth()->user()->name,
+            'tipe' => $request->tipe,
+            'aktivitas' => 'update',
+            'nominal' => preg_replace('/\D/', '', $request->nominal),
+            'keterangan' => 'update uraian '.$pembukuan->uraian.' menjadi '.$request->uraian
+        ];
+
+        $pembukuan->update([
             'kategori_ashnaf_id' => $request->ashnaf,
             'kategori_program_id' => $request->program,
             'tanggal' => $request->tanggal,
@@ -108,12 +131,28 @@ class PembukuanController extends Controller
             'user_id' => $userId,
         ]);
 
+        LogServiceProvider::catat($log);
+
         return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     public function destroy($id)
     {
-        $data = Pembukuan::find($id)->delete();
+        $data = Pembukuan::find($id);
+
+        $log = [
+            'pembukuan_id' => $id,
+            'user' => auth()->user()->name,
+            'tipe' => 'hapus',
+            'aktivitas' => 'delete',
+            'nominal' => preg_replace('/\D/', '', $data->nominal),
+            'keterangan' => 'hapus '.$data->uraian
+        ];
+
+        $hapus = $data->delete();
+
+        LogServiceProvider::catat($log);
+
         return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }

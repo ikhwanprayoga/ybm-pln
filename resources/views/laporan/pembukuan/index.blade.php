@@ -31,12 +31,23 @@
                             <form action="{{ route('laporan.pembukuan', ['slug' => $kategoriPembukuan->slug]) }}" method="post">
                                 @csrf
                                 <div class="input-group mb-3">
-                                    <select class="form-control" name="tahun">
-                                        <option>Pilih Tahun</option>
-                                        @foreach ($tahuns as $tahuns)
-                                        <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="tahun">
+                                            <option>Pilih Tahun</option>
+                                            @foreach ($tahuns as $tahuns)
+                                            <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="bulan">
+                                            <option>Pilih Bulan</option>
+                                            <option value="all">Semua Bulan</option>
+                                            @foreach (Helpers::bulanIndo() as $keyBulan => $bulanIndo)
+                                            <option value="{{ $keyBulan }}">{{ $bulanIndo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-primary" type="button">Lihat</button>
                                     </div>

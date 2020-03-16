@@ -23,11 +23,23 @@ class LaporanController extends Controller
 
         $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
         $kategoriPembukuan = KategoriPembukuan::where('slug', $slug)->first();
-        $datas = Pembukuan::with('ashnaf', 'program', 'pembukuan')
-                        ->where('kategori_pembukuan_id', $kategoriPembukuan->id)
-                        ->whereYear('tanggal', $tahun)
-                        ->orderBy('tanggal', 'asc')
-                        ->get();
+
+        if ($request->bulan == 'all') {
+            $datas = Pembukuan::with('ashnaf', 'program', 'pembukuan')
+                            ->where('kategori_pembukuan_id', $kategoriPembukuan->id)
+                            ->whereYear('tanggal', $tahun)
+                            ->orderBy('tanggal', 'asc')
+                            ->get();
+        } else {
+            $datas = Pembukuan::with('ashnaf', 'program', 'pembukuan')
+                            ->where('kategori_pembukuan_id', $kategoriPembukuan->id)
+                            ->whereYear('tanggal', $tahun)
+                            ->whereMonth('tanggal', $request->bulan)
+                            ->orderBy('tanggal', 'asc')
+                            ->get();
+        }
+        
+
 
         $compact = [
             'tahuns',

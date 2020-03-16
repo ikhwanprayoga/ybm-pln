@@ -84,4 +84,22 @@ class HelpersServiceProvider
                 );
         return $bulan;
     }
+
+    public static function viewBulanIndo($key)
+    {
+        $bulan = array (1 =>   'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                );
+        return $bulan[$key];
+    }
 }

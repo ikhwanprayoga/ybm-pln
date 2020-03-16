@@ -33,8 +33,9 @@ class PembukuanExport implements FromView
     public function view(): View
     {
         // return dd(Pembukuan::query()->whereYear('tanggal', $this->tahun)->where('kategori_pembukuan_id', $this->idKategoriPembukuan)->get());
+        $data = Pembukuan::query()->whereYear('tanggal', $this->tahun)->where('kategori_pembukuan_id', $this->idKategoriPembukuan)->get();
         return view('laporan.pembukuan.export', [
-            'pembukuans' => Pembukuan::query()->whereYear('tanggal', $this->tahun)->where('kategori_pembukuan_id', $this->idKategoriPembukuan)->get()
+            'pembukuans' => $data
         ]);
     }
 

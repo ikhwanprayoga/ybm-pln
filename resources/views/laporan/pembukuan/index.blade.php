@@ -26,25 +26,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Laporan Pembukuan {{ $kategoriPembukuan->nama_pembukuan }} Tahun {{ $tahun }}</h4>
+                        <h4 class="card-title">Laporan Pembukuan {{ $kategoriPembukuan->nama_pembukuan }} Tahun {{ $tahun }}&nbsp;{{ $bulan=='all' ? 'Semua Bulan' : 'Bulan '.Helpers::viewBulanIndo($bulan) }}</h4>
                         <div class="basic-form">
                             <form action="{{ route('laporan.pembukuan', ['slug' => $kategoriPembukuan->slug]) }}" method="post">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <div class="col-md-5">
-                                        <select class="form-control" name="tahun">
-                                            <option>Pilih Tahun</option>
+                                        <select class="form-control" name="tahun" required>
+                                            <option value="">Pilih Tahun</option>
                                             @foreach ($tahuns as $tahuns)
-                                            <option value="{{ $tahuns->tahun }}">{{ $tahuns->tahun }}</option>
+                                            <option value="{{ $tahuns->tahun }}" {{ $tahun==$tahuns->tahun ? 'selected' : '' }}>{{ $tahuns->tahun }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <select class="form-control" name="bulan">
-                                            <option>Pilih Bulan</option>
-                                            <option value="all">Semua Bulan</option>
+                                        <select class="form-control" name="bulan" required>
+                                            <option value="">Pilih Bulan</option>
+                                            <option value="all" {{ $bulan=='all' ? 'selected' : '' }}>Semua Bulan</option>
                                             @foreach (Helpers::bulanIndo() as $keyBulan => $bulanIndo)
-                                            <option value="{{ $keyBulan }}">{{ $bulanIndo }}</option>
+                                            <option value="{{ $keyBulan }}" {{ $bulan==$keyBulan ? 'selected' : '' }}>{{ $bulanIndo }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -103,10 +103,21 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        $saldo = 0;
+                                        $saldo = $saldoPeriodeLalu;
                                         $tDebet = 0;
                                         $tKredit = 0;
                                     @endphp
+                                    @if ($bulan != 'all')
+                                    <tr>
+                                        <td colspan="5">Saldo bulan {{ Helpers::periode($periode, 'sebelum') }}</td>
+                                        <td colspan="4"><h5>{{ Helpers::toRupiah($saldoPeriodeLalu) }}</h5></td>
+                                    </tr>
+                                    @else
+                                    <tr>
+                                        <td colspan="5">Sisa saldo bulan {{ Helpers::periode($tahun.'-01', 'sebelum') }}</td>
+                                        <td colspan="4"><h5>{{ Helpers::toRupiah($saldoPeriodeLalu) }}</h5></td>
+                                    </tr>
+                                    @endif
                                     @foreach ($datas as $data)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>

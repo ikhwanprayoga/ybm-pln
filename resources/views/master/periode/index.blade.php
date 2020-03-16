@@ -85,7 +85,7 @@
                                             <input type="checkbox" id="periode_{{ $item->id }}" class="changeStatus" data-id="{{ $item->id }}" {{ ($item->status == 1) ? 'checked' : '' }} data-toggle="toggle" data-style="ios" data-on="Aktif" data-off="Tidak Aktif">
                                         </td>
                                         <td>
-                                            <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->periode }}" data-status="{{ $item->status }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button>
+                                            {{-- <button type="button" data-id="{{ $item->id }}" data-nama="{{ $item->periode }}" data-status="{{ $item->status }}" class="btn mb-1 btn-warning tombolUbah" >Ubah</button> --}}
                                             <button type="button" data-id="{{ $item->id }}" class="btn mb -1 btn-danger tombolHapus" >Hapus</button>
                                         </td>
                                     </tr>
@@ -195,7 +195,7 @@
     $('#pilihTahun option').each(function () {
         listTahun.push($(this).val())
     })
-    
+
     listTahun.forEach(element => {
         console.log(element)
         if (tahunAktif == element) {
@@ -209,7 +209,7 @@
 
     $('#pilihTahun').on('change', function () {
         var tahun = $(this).val()
-        
+
         listTahun.forEach(element => {
             if (tahun == element) {
                 $('.'+element).show()

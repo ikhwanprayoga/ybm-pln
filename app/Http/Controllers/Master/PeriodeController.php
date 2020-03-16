@@ -18,13 +18,15 @@ class PeriodeController extends Controller
     public function index()
     {
         $data = Periode::orderBy('periode', 'asc')->get();
-        
+
         if ($tahunAktif = $data->where('status', 1)->first()) {
             $tahunAktif = substr($tahunAktif->periode, 0, 4);
         } else {
             $tahunAktif = null;
         }
-        
+
+        $tahun = [];
+
         foreach ($data as $key => $value) {
             $tahun[] = substr($value->periode, 0, 4);
         }
@@ -65,7 +67,7 @@ class PeriodeController extends Controller
         if ($cekPeriode->count() > 0) {
             return redirect()->back()->with('error', 'Periode yang dimasukkan sudah terdapat pada sistem');
         } else {
-            for ($i=1; $i <= 12; $i++) { 
+            for ($i=1; $i <= 12; $i++) {
                 if ($i < 10) {
                     $i = '0'.$i;
                 }

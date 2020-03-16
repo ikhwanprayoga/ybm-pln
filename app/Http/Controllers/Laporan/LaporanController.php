@@ -77,6 +77,6 @@ class LaporanController extends Controller
     {
         $kategoriPembukuan = KategoriPembukuan::where('slug', $slug)->first();
         // $pembukuan = Pembukuan::where('kategori_pembukuan_id', $kategoriPembukuan->id)->whereYear('tanggal', $tahun)->get();
-        return Excel::download(new PembukuanExport($kategoriPembukuan->id, $tahun, $bulan), 'laporan-'.$kategoriPembukuan->nama_pembukuan.'-'.$tahun.'.xlsx');
+        return Excel::download(new PembukuanExport($kategoriPembukuan->id, $tahun, $bulan), 'laporan-'.$kategoriPembukuan->nama_pembukuan.'-'.$tahun.'-'.$bulan.'.xlsx');
     }
 }

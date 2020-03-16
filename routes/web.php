@@ -41,7 +41,7 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => [
     //laporan pembukuan
     Route::get('pembukuan/{slug}', 'LaporanController@index')->name('laporan.pembukuan');
     Route::post('pembukuan/{slug}', 'LaporanController@index')->name('laporan.pembukuan');
-    Route::get('pembukuan/{slug}/export/{tahun}', 'LaporanController@export')->name('laporan.pembukuan.export');
+    Route::get('pembukuan/{slug}/export/{tahun}/{bulan}', 'LaporanController@export')->name('laporan.pembukuan.export');
     //arus data
     Route::get('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');
     Route::post('arus-dana', 'ArusDanaController@index')->name('laporan.arus-dana');

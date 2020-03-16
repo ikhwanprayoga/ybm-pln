@@ -61,8 +61,6 @@ class LaporanController extends Controller
                             ->get();
         }
 
-
-
         $compact = [
             'tahuns',
             'tahun',
@@ -75,10 +73,10 @@ class LaporanController extends Controller
         return view('laporan.pembukuan.index', compact($compact));
     }
 
-    public function export(Request $request, $slug, $tahun)
+    public function export(Request $request, $slug, $tahun, $bulan)
     {
         $kategoriPembukuan = KategoriPembukuan::where('slug', $slug)->first();
         // $pembukuan = Pembukuan::where('kategori_pembukuan_id', $kategoriPembukuan->id)->whereYear('tanggal', $tahun)->get();
-        return Excel::download(new PembukuanExport($kategoriPembukuan->id, $tahun), 'laporan-'.$kategoriPembukuan->nama_pembukuan.'-'.$tahun.'.xlsx');
+        return Excel::download(new PembukuanExport($kategoriPembukuan->id, $tahun, $bulan), 'laporan-'.$kategoriPembukuan->nama_pembukuan.'-'.$tahun.'.xlsx');
     }
 }

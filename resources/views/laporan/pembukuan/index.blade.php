@@ -81,7 +81,7 @@
                                 <h4 class="card-title">Pembukuan {{ $kategoriPembukuan->nama_pembukuan }}</h4>
                             </div>
                             <div class="col-lg-6" style="text-align: right;">
-                                <a href="{{ route('laporan.pembukuan.export', ['slug'=>$kategoriPembukuan->slug, 'tahun' => $tahun]) }}">
+                                <a href="{{ route('laporan.pembukuan.export', ['slug'=>$kategoriPembukuan->slug, 'tahun' => $tahun, 'bulan' => $bulan]) }}">
                                     <button type="button" class="btn mb-1 btn-primary" data-toggle="modal" data-target="#modalTambah">Export Laporan (Excel)</button>
                                 </a>
                             </div>

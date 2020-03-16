@@ -14,10 +14,21 @@
     </thead>
     <tbody>
         @php
-            $saldo = 0;
+            $saldo = $saldoPeriodeLalu;
             $tDebet = 0;
             $tKredit = 0;
         @endphp
+        @if ($bulan != 'all')
+        <tr>
+            <td colspan="5">Saldo bulan {{ Helpers::periode($periode, 'sebelum') }}</td>
+            <td colspan="4"><h5>{{ Helpers::toRupiah($saldoPeriodeLalu) }}</h5></td>
+        </tr>
+        @else
+        <tr>
+            <td colspan="5">Sisa saldo bulan {{ Helpers::periode($tahun.'-01', 'sebelum') }}</td>
+            <td colspan="4"><h5>{{ Helpers::toRupiah($saldoPeriodeLalu) }}</h5></td>
+        </tr>
+        @endif
         @foreach ($pembukuans as $data)
         <tr>
             <td>{{ $loop->iteration }}</td>

@@ -22,7 +22,7 @@ class StatistikPenyaluranController extends Controller
         // $tahun = 2019;
         $bulans = $this->bulan();
         $tahuns = Pembukuan::distinct()->get([DB::raw('YEAR(tanggal) as tahun')]);
-        
+
         // grafik pie ahsnaf
         $grafikPieAshnafOrang = $this->grafikPieAshnafOrang($tahun);
         $grafikPieAshnafRupiah = $this->grafikPieAshnafRupiah($tahun);
@@ -36,18 +36,18 @@ class StatistikPenyaluranController extends Controller
         //grafik batang program
         $grafikProgramOrang = $this->grafikProgramOrang($tahun);
         $grafikProgramRupiah = $this->grafikProgramRupiah($tahun);
-        
+
         return view('laporan.statistik_penyaluran.index', compact(
-            'bulans', 
-            'tahuns', 
+            'bulans',
+            'tahuns',
             'tahun',
             'grafikPieAshnafOrang',
             'grafikPieAshnafRupiah',
-            'grafikAshnafOrang', 
-            'grafikAshnafRupiah', 
+            'grafikAshnafOrang',
+            'grafikAshnafRupiah',
             'grafikPieProgramOrang',
             'grafikPieProgramRupiah',
-            'grafikProgramOrang', 
+            'grafikProgramOrang',
             'grafikProgramRupiah'
         ));
     }

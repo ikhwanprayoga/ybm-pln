@@ -42,6 +42,12 @@
                     {{-- <li><a href="#">Saldo Kas Bank</a></li> --}}
                 </ul>
             </li>
+            <li class="nav-label">RKAT</li>
+            <li>
+                <a href="{{ route('rkat.index') }}" aria-expanded="false">
+                    <i class="icon-notebook menu-icon"></i><span class="nav-text">Rencana Anggaran</span>
+                </a>
+            </li>
             @if (auth()->user()->level == 'superadmin')
             <li class="nav-label">Master</li>
             <li class="mega-menu mega-menu-sm">

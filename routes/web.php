@@ -58,6 +58,14 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => [
     Route::post('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
 });
 
+Route::group(['prefix' => 'rkat', 'middleware' => ['auth']], function () {
+    Route::get('/', 'RkatController@index')->name('rkat.index');
+    Route::post('{idProgram}/store', 'RkatController@store_kategori_program')->name('rkat.kategori-program.store');
+    Route::post('{idRkat}/update', 'RkatController@update')->name('rkat.update');
+    Route::post('{idRkat}/destroy', 'RkatController@destroy')->name('rkat.destroy');
+    Route::post('{idProgram}/{idKategoriRkat}/store', 'RkatController@store_sub_kategori_program')->name('rkat.sub-kategori-program.store');
+});
+
 Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['auth']], function () {
     Route::resource('pembukuan', 'PembukuanController');
     Route::resource('ashnaf', 'AshnafController');

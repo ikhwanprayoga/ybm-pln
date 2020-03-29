@@ -25,19 +25,23 @@ class ArusDanaController extends Controller
 
         if (isset($cekTahun)) {
             foreach ($katPembukuan as $key => $value) {
-                $dataSaldo[] = Pembukuan::where('kategori_pembukuan_id', $value->id)
-                                    ->whereYear('tanggal', $tahun)
-                                    // ->whereMonth('tanggal', $i)
-                                    ->orderBy('tanggal', 'asc')
-                                    ->first()->nominal;
+                $cek = Pembukuan::where('kategori_pembukuan_id', $value->id)
+                                ->where('tipe', 'debet')
+                                ->whereYear('tanggal', $tahun)
+                                ->orderBy('tanggal', 'asc')->first();
+                if (isset($cek->nominal)) {
+                    $dataSaldo[] = $cek->nominal;
+                } else {
+                    $dataSaldo[] = 0;
+                }
             }
-            $data['saldoAwal'] = array_sum($dataSaldo); 
+            $data['saldoAwal'] = array_sum($dataSaldo);
         } else {
             $data['saldoAwal'] = 0;
         }
-        
+
         // return $dataSaldo;
-        
+
         if ($tahun == 2019) {
             $data['saldoAwal'] = array_sum($dataSaldo) - 400000000;
         }
@@ -72,7 +76,7 @@ class ArusDanaController extends Controller
         $data['ashnafMualafOrang'] = Pembukuan::where('kategori_ashnaf_id', 7)->whereYear('tanggal', $tahun)->sum('penerima_manfaat');
         $data['ashnafMualafRupiah'] = Pembukuan::where('kategori_ashnaf_id', 7)->whereYear('tanggal', $tahun)->sum('nominal');
         $data['ashnafAmilRupiah'] = Pembukuan::where('kategori_ashnaf_id', 8)->whereYear('tanggal', $tahun)->sum('nominal');
-        
+
         $data['jumlahAshnafOrang'] = Pembukuan::whereIn('kategori_ashnaf_id', [2,3,4,5,6,7])->whereYear('tanggal', $tahun)->sum('penerima_manfaat');
         $data['jumlahAshnafRupiah'] = Pembukuan::whereIn('kategori_ashnaf_id', [2,3,4,5,6,7])->whereYear('tanggal', $tahun)->sum('nominal');
 

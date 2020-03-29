@@ -12,6 +12,7 @@
     <!-- Custom Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/common/common.min.js') }}"></script>
     @stack('css')
 </head>
 
@@ -157,13 +158,14 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="{{ asset('plugins/common/common.min.js') }}"></script>
+
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/gleek.js') }}"></script>
     <script src="{{ asset('js/styleSwitcher.js') }}"></script>
     <script src="{{ asset('plugins/toastr/js/toastr.min.js') }}"></script>
     @stack('js')
+    {{-- <script>(function(d,a){function c(){var b=d.createElement("script");b.async=!0;b.type="text/javascript";b.src=a._settings.messengerUrl;b.crossOrigin="anonymous";var c=d.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}window.kayako=a;a.readyQueue=[];a.newEmbedCode=!0;a.ready=function(b){a.readyQueue.push(b)};a._settings={apiUrl:"https://universitas-tanjungpura.kayako.com/api/v1",teamName:"Universitas Tanjungpura",homeTitles:[{"locale":"en-us","translation":"Hello! 👋"}],homeSubtitles:[{"locale":"en-us","translation":"Welcome to Universitas Tanjungpura. Let's chat — start a new conversation below."}],messengerUrl:"https://universitas-tanjungpura.kayakocdn.com/messenger",realtimeUrl:"wss://kre.kayako.net/socket",widgets:{presence:{enabled:true},twitter:{enabled:false,twitterHandle:"null"},articles:{enabled:false,sectionId:null}},styles:{primaryColor:"#F1703F",homeBackground:"-180deg, #E7EE9D 0%, #5BF2B9 100%",homePattern:"https://assets.kayako.com/messenger/pattern-1--dark.svg",homeTextColor:"#2D3138"}};window.attachEvent?window.attachEvent("onload",c):window.addEventListener("load",c,!1)})(document,window.kayako||{});</script> --}}
 </body>
 
 </html>

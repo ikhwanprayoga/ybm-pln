@@ -5,7 +5,7 @@
 @endsection
 
 @push('css')
-    
+
 @endpush
 
 @section('content')
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 
     <div class="container-fluid">
@@ -105,7 +105,7 @@
                 </div>
             </div>
             {{-- <div class="col-lg-4"></div> --}}
-        </div>  
+        </div>
     </div>
 
     <div class="container-fluid">
@@ -141,7 +141,7 @@
                 </div>
          </div>
          {{-- <div class="col-lg-4"></div> --}}
-     </div>   
+     </div>
     </div>
 
     <div class="container-fluid">
@@ -165,9 +165,9 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
-    
+
     <div class="container-fluid">
      <div class="row">
          <div class="col-lg-12">
@@ -201,7 +201,7 @@
                 </div>
          </div>
          {{-- <div class="col-lg-4"></div> --}}
-     </div>   
+     </div>
     </div>
 
     <div class="container-fluid">
@@ -237,7 +237,7 @@
                 </div>
          </div>
          {{-- <div class="col-lg-4"></div> --}}
-     </div>   
+     </div>
     </div>
 
 </div>
@@ -279,14 +279,14 @@
 
                         var dataArray = {!! json_encode($grafikPieAshnafOrang['data']) !!}
                         var dataAngka = dataArray.map(Number)
-                        
+
                         var sum = dataAngka.reduce((a, b) => {
                                     return a + b
                                 }, 0);
-                        
+
                         var percent = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] / sum * 100;
                         percent = percent.toFixed(0); // make a nice string
-                        
+
                         // console.log(data.datasets[tooltipItem.datasetIndex].namaAshnaf[tooltipItem.index])
                         return data.datasets[tooltipItem.datasetIndex].namaAshnaf[tooltipItem.index] + ': ' + percent + '%';
                     }
@@ -328,14 +328,14 @@
 
                         var dataArray = {!! json_encode($grafikPieAshnafRupiah['data']) !!}
                         var dataAngka = dataArray.map(Number)
-                        
+
                         var sum = dataAngka.reduce((a, b) => {
                                     return a + b
                                 }, 0);
-                        
+
                         var percent = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] / sum * 100;
                         percent = percent.toFixed(0); // make a nice string
-                        
+
                         // console.log(data.datasets[tooltipItem.datasetIndex].namaAshnaf[tooltipItem.index])
                         return data.datasets[tooltipItem.datasetIndex].namaAshnaf[tooltipItem.index] + ': ' + percent + '%';
                     }
@@ -377,14 +377,14 @@
 
                         var dataArray = {!! json_encode($grafikPieProgramOrang['data']) !!}
                         var dataAngka = dataArray.map(Number)
-                        
+
                         var sum = dataAngka.reduce((a, b) => {
                                     return a + b
                                 }, 0);
-                        
+
                         var percent = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] / sum * 100;
                         percent = percent.toFixed(0); // make a nice string
-                        
+
                         // console.log(data.datasets[tooltipItem.datasetIndex].namaProgram[tooltipItem.index])
                         return data.datasets[tooltipItem.datasetIndex].namaProgram[tooltipItem.index] + ': ' + percent + '%';
                     }
@@ -426,14 +426,14 @@
 
                         var dataArray = {!! json_encode($grafikPieProgramRupiah['data']) !!}
                         var dataAngka = dataArray.map(Number)
-                        
+
                         var sum = dataAngka.reduce((a, b) => {
                                     return a + b
                                 }, 0);
-                        
+
                         var percent = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] / sum * 100;
                         percent = percent.toFixed(0); // make a nice string
-                        
+
                         // console.log(data.datasets[tooltipItem.datasetIndex].namaProgram[tooltipItem.index])
                         return data.datasets[tooltipItem.datasetIndex].namaProgram[tooltipItem.index] + ': ' + percent + '%';
                     }
@@ -448,7 +448,7 @@
     var grafikAshnafOrang = {!! json_encode($grafikAshnafOrang) !!}
     var penyaluranAshnafOrang = []
 
-    $.each(grafikAshnafOrang, function (indexInArray, valueOfElement) { 
+    $.each(grafikAshnafOrang, function (indexInArray, valueOfElement) {
         // console.log(valueOfElement)
         var ashnafData = {
             label: valueOfElement.namaAshnaf,
@@ -496,7 +496,7 @@
     var grafikAshnafRupiah = {!! json_encode($grafikAshnafRupiah) !!}
     var penyaluranAshnafRupiah = []
 
-    $.each(grafikAshnafRupiah, function (indexInArray, valueOfElement) { 
+    $.each(grafikAshnafRupiah, function (indexInArray, valueOfElement) {
         // console.log(valueOfElement)
         var ashnafData = {
             label: valueOfElement.namaAshnaf,
@@ -546,7 +546,7 @@
     var grafikProgramOrang = {!! json_encode($grafikProgramOrang) !!}
     var penyaluranProgramOrang = []
 
-    $.each(grafikProgramOrang, function (indexInArray, valueOfElement) { 
+    $.each(grafikProgramOrang, function (indexInArray, valueOfElement) {
         // console.log(valueOfElement)
         var programData = {
             label: valueOfElement.namaProgram,
@@ -594,7 +594,7 @@
     var grafikProgramRupiah = {!! json_encode($grafikProgramRupiah) !!}
     var penyaluranProgramRupiah = []
 
-    $.each(grafikProgramRupiah, function (indexInArray, valueOfElement) { 
+    $.each(grafikProgramRupiah, function (indexInArray, valueOfElement) {
         // console.log(valueOfElement)
         var programData = {
             label: valueOfElement.namaProgram,

@@ -12,4 +12,9 @@ class KategoriProgram extends Model
         'nama_program', 'warna'
     ];
     public $timesstamps = true;
+
+    public function rkatProgram()
+    {
+        return $this->hasMany('App\Models\RkatProgram', 'kategori_program_id');
+    }
 }

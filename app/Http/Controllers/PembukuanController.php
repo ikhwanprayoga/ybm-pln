@@ -11,6 +11,7 @@ use App\Models\KategoriAshnaf;
 use App\Models\KategoriProgram;
 use App\Models\Pembukuan;
 use App\Models\Periode;
+use App\Models\RkatProgram;
 
 class PembukuanController extends Controller
 {
@@ -60,7 +61,12 @@ class PembukuanController extends Controller
         ]);
 
         $userId = auth()->user()->id;
+        $anggaranId = null;
         $kategoriPembukuanId = KategoriPembukuan::where('slug', $slug)->first()->id;
+
+        if ($request->subAnggaran) {
+            $anggaranId = $request->subAnggaran;
+        }
 
         $pembukuan = Pembukuan::create([
             'kategori_pembukuan_id' => $kategoriPembukuanId,
@@ -72,6 +78,7 @@ class PembukuanController extends Controller
             'nominal' => preg_replace('/\D/', '', $request->nominal),
             'penerima_manfaat' => $request->penerima_manfaat,
             'user_id' => $userId,
+            'rkat_program_id' => $anggaranId,
         ]);
 
         $log = [
@@ -108,8 +115,12 @@ class PembukuanController extends Controller
         ]);
 
         $userId = auth()->user()->id;
+        $anggaranId = null;
 
         $pembukuan = Pembukuan::find($id);
+        if ($request->subAnggaran) {
+            $anggaranId = $request->subAnggaran;
+        }
 
         $log = [
             'pembukuan_id' => $id,
@@ -129,6 +140,7 @@ class PembukuanController extends Controller
             'nominal' => preg_replace('/\D/', '', $request->nominal),
             'penerima_manfaat' => $request->penerima_manfaat,
             'user_id' => $userId,
+            'rkat_program_id' => $anggaranId,
         ]);
 
         LogServiceProvider::catat($log);

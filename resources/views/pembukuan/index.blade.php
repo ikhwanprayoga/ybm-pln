@@ -191,7 +191,7 @@ a:hover {
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Tipe</label>
-                                <select class="form-control" name="tipe" id="" required>
+                                <select class="form-control" name="tipe" id="tipeTambah" required>
                                   <option value="">Pilih Tipe</option>
                                   <option value="debet">DEBET</option>
                                   <option value="kredit">KREDIT</option>
@@ -218,7 +218,7 @@ a:hover {
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Program</label>
-                                <select class="form-control" name="program" id="" required>
+                                <select class="form-control" name="program" id="programTambah" required>
                                   <option value="">Pilih Program</option>
                                   @foreach ($programs as $program)
                                   <option value="{{ $program->id }}">{{ $program->nama_program }}</option>
@@ -228,6 +228,21 @@ a:hover {
                             <div class="form-group col-md-4">
                                 <label for="my-input">Pen. Manfaat</label>
                                 <input id="my-input" class="form-control" type="number" name="penerima_manfaat" required>
+                            </div>
+                        </div>
+                        <div class="form-row" id="rowAnggaranTambah" hidden>
+                            <div class="col-md-4"></div>
+                            <div class="form-group col-md-4">
+                                <label>Anggaran</label>
+                                <select class="form-control" name="anggaran" id="anggaranTambah">
+                                    <option value="">Pilih Anggaran</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="my-input">Sub Anggaran</label>
+                                <select class="form-control" name="subAnggaran" id="subAnggaranTambah">
+                                    <option value="">Pilih Sub Anggaran</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -298,6 +313,21 @@ a:hover {
                                 <input id="penerimaManfaatUbah" class="form-control" type="number" name="penerima_manfaat" required>
                             </div>
                         </div>
+                        <div class="form-row" id="rowAnggaranUbah" hidden>
+                            <div class="col-md-4"></div>
+                            <div class="form-group col-md-4">
+                                <label>Anggaran</label>
+                                <select class="form-control" name="anggaran" id="anggaranUbah">
+                                    <option value="">Pilih Anggaran</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="my-input">Sub Anggaran</label>
+                                <select class="form-control" name="subAnggaran" id="subAnggaranUbah">
+                                    <option value="">Pilih Sub Anggaran</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -364,8 +394,92 @@ a:hover {
         date: true
     });
 
+    $('#tipeTambah').on('change', function () {
+        if ($(this).val() == 'kredit') {
+            $('#rowAnggaranTambah').removeAttr('hidden')
+            $('#anggaranTambah, #subAnggaranTambah').attr('required', true)
+        } else {
+            $('#rowAnggaranTambah').attr("hidden",true)
+            $('#anggaranTambah, #subAnggaranTambah').removeAttr('required')
+        }
+    })
+
+    $('#programTambah').on('change', function () {
+        var urlBaseRkat = '{{ url("rkat") }}'
+        var programId = $('#programTambah').val()
+        var urlRkat = urlBaseRkat+'/'+programId+'/get'
+        $("#anggaranTambah").empty();
+        $("#subAnggaranTambah").empty();
+        $.getJSON(urlRkat, function (data) {
+            // console.log(data)
+            if (data.data.length > 0) {
+                // console.log('array ada')
+                $("#anggaranTambah").append('<option value="">Pilih Anggaran</option>');
+                $.each(data.data, function (index, val) {
+                    $("#anggaranTambah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+                });
+            } else {
+                // console.log('array kosong')
+                $("#anggaranTambah").append('<option value="">Anggaran Tidak Tersedia</option>');
+                $("#subAnggaranTambah").append('<option value="">Sub Anggaran Tidak Tersedia</option>');
+                $('#anggaranTambah, #subAnggaranTambah').removeAttr('required')
+            }
+        });
+    })
+
+    $('#anggaranTambah').on('change', function () {
+        var urlBaseRkat = '{{ url("rkat/sub") }}'
+        var anggaranId = $('#anggaranTambah').val()
+        var urlSubRkat = urlBaseRkat+'/'+anggaranId+'/get'
+        $("#subAnggaranTambah").empty();
+        $.getJSON(urlSubRkat, function (data) {
+            console.log(data)
+            $("#subAnggaranTambah").append('<option value="">Pilih Sub Anggaran</option>');
+            $.each(data.data, function (index, val) {
+                $("#subAnggaranTambah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+            });
+        });
+    })
+
     $('.float-botton').click(function () {
         $('#modalTambah').modal('show')
+    })
+
+    $('#programUbah').on('change', function () {
+        var urlBaseRkat = '{{ url("rkat") }}'
+        var programId = $('#programUbah').val()
+        var urlRkat = urlBaseRkat+'/'+programId+'/get'
+        $("#anggaranUbah").empty();
+        $("#subAnggaranUbah").empty();
+        $.getJSON(urlRkat, function (data) {
+            // console.log(data)
+            if (data.data.length > 0) {
+                // console.log('array ada')
+                $("#anggaranUbah").append('<option value="">Pilih Anggaran</option>');
+                $.each(data.data, function (index, val) {
+                    $("#anggaranUbah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+                });
+            } else {
+                // console.log('array kosong')
+                $("#anggaranUbah").append('<option value="">Anggaran Tidak Tersedia</option>');
+                $("#subAnggaranUbah").append('<option value="">Sub Anggaran Tidak Tersedia</option>');
+                $('#anggaranUbah, #subAnggaranUbah').removeAttr('required')
+            }
+        });
+    })
+
+    $('#anggaranUbah').on('change', function () {
+        var urlBaseRkat = '{{ url("rkat/sub") }}'
+        var anggaranId = $('#anggaranUbah').val()
+        var urlSubRkat = urlBaseRkat+'/'+anggaranId+'/get'
+        $("#subAnggaranUbah").empty();
+        $.getJSON(urlSubRkat, function (data) {
+            // console.log(data)
+            $("#subAnggaranUbah").append('<option value="">Pilih Sub Anggaran</option>');
+            $.each(data.data, function (index, val) {
+                $("#subAnggaranUbah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+            });
+        });
     })
 
     $('.tombolUbah').click(function () {
@@ -377,7 +491,7 @@ a:hover {
         var id = $(this).data('id')
 
         $.getJSON(url+'/'+id+'/edit', function (data) {
-            console.log(data)
+            // console.log(data)`
             // var nominal = data.nominal
             $('#tanggalUbah').val(data.tanggal)
             $('#tipeUbah').val(data.tipe).trigger('change')
@@ -386,6 +500,66 @@ a:hover {
             $('#ashnafUbah').val(data.kategori_ashnaf_id).trigger('change')
             $('#programUbah').val(data.kategori_program_id).trigger('change')
             $('#penerimaManfaatUbah').val(data.penerima_manfaat)
+            var anggaranIdUbah = data.rkat_program_id
+
+            if (data.tipe == 'kredit') {
+                $('#rowAnggaranUbah').removeAttr('hidden')
+                $('#anggaranUbah, #subAnggaranUbah').attr('required', true)
+
+                //each data anggaran
+                var urlBaseRkat = '{{ url("rkat") }}'
+                var programId = data.kategori_program_id
+                var urlRkat = urlBaseRkat+'/'+programId+'/get'
+                $("#anggaranUbah").empty();
+                $("#subAnggaranUbah").empty();
+                $.getJSON(urlRkat, function (e) {
+                    // console.log(data)
+                    if (e.data.length > 0) {
+                        // console.log('array ada')
+                        $("#anggaranUbah").append('<option value="">Pilih Anggaran</option>');
+                        $.each(e.data, function (index, val) {
+                            $("#anggaranUbah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+                        });
+                    } else {
+                        // console.log('array kosong')
+                        $("#anggaranUbah").append('<option value="">Anggaran Tidak Tersedia</option>');
+                        $("#subAnggaranUbah").append('<option value="">Sub Anggaran Tidak Tersedia</option>');
+                        $('#anggaranUbah, #subAnggaranUbah').removeAttr('required')
+                    }
+                });
+
+                //get data rkat berdasarkan id
+                var urlRkat = '{{ url("rkat/get") }}'
+                $.getJSON(urlRkat+'/'+anggaranIdUbah, function (d) {
+                    // console.log(d)
+                    $("#anggaranUbah").val(d.data.parent_id)
+                    //get sub anggaran
+                    var urlBaseRkat = '{{ url("rkat/sub") }}'
+                    var anggaranId = d.data.parent_id
+                    var urlSubRkat = urlBaseRkat+'/'+anggaranId+'/get'
+                    $("#subAnggaranUbah").empty();
+                    $.getJSON(urlSubRkat, function (data) {
+                        // console.log(data)
+                        $("#subAnggaranUbah").append('<option value="">Pilih Sub Anggaran</option>');
+                        $.each(data.data, function (index, val) {
+                            $("#subAnggaranUbah").append('<option value='+val.id+'>'+val.rincian_rkat+'</option>');
+                        });
+                        //ubah selected
+                        $("#subAnggaranUbah").val(d.data.id)
+                    });
+                })
+            }
+
+        })
+
+        $('#tipeUbah').on('change', function () {
+            if ($(this).val() == 'kredit') {
+                $('#rowAnggaranUbah').removeAttr('hidden')
+                $('#anggaranUbah, #subAnggaranUbah').attr('required', true)
+            } else {
+                $('#rowAnggaranUbah').attr("hidden",true)
+                $('#anggaranUbah, #subAnggaranUbah').removeAttr('required')
+            }
         })
 
         $('#tanggalUbah').bootstrapMaterialDatePicker({

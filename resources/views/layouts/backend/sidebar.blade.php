@@ -39,6 +39,7 @@
                     <li><a href="{{ route('laporan.rekap-penyaluran-rinci') }}">Rekap Penyaluran Rinci</a></li>
                     <li><a href="{{ route('laporan.rekap-penyaluran-penerima') }}">Rekap Penyaluran Penerima</a></li>
                     <li><a href="{{ route('laporan.arus-dana') }}">Arus Kas Dana</a></li>
+                    <li><a href="{{ route('laporan.arus-dana') }}">Realisasi RKAT</a></li>
                     {{-- <li><a href="#">Saldo Kas Bank</a></li> --}}
                 </ul>
             </li>

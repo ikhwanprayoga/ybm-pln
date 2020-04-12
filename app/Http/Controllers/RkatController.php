@@ -127,4 +127,34 @@ class RkatController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
+
+    public function get_rkat($rkatId)
+    {
+        $rkat = RkatProgram::find($rkatId);
+
+        return response()->json([
+            'status' => true,
+            'data' => $rkat
+        ], 200);
+    }
+
+    public function get_rkat_program($programId)
+    {
+        $rkats = RkatProgram::where('kategori_program_id', $programId)->where('parent_id', NULL)->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $rkats
+        ], 200);
+    }
+
+    public function get_sub_rkat_program($rkatId)
+    {
+        $subRkat = RkatProgram::where('parent_id', $rkatId)->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $subRkat
+        ], 200);
+    }
 }

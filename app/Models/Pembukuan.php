@@ -9,14 +9,15 @@ class Pembukuan extends Model
     protected $table = 'pembukuans';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'kategori_pembukuan_id', 
-        'kategori_ashnaf_id', 
-        'kategori_program_id', 
-        'user_id', 
-        'tanggal', 
-        'tipe', 
-        'uraian', 
-        'nominal', 
+        'kategori_pembukuan_id',
+        'kategori_ashnaf_id',
+        'kategori_program_id',
+        'user_id',
+        'rkat_program_id',
+        'tanggal',
+        'tipe',
+        'uraian',
+        'nominal',
         'penerima_manfaat',
     ];
     public $timesstamps = true;

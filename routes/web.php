@@ -56,6 +56,8 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'middleware' => [
     //penerimaan data
     Route::get('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
     Route::post('penerimaan-dana', 'PenerimaanDanaController@index')->name('laporan.penerimaan-dana');
+    //realisasi rkat
+    Route::get('realisasi-rkat', 'RealisasiRkatController@index')->name('laporan.realisasi-rkat');
 });
 
 Route::group(['prefix' => 'rkat', 'middleware' => ['auth']], function () {
@@ -64,6 +66,9 @@ Route::group(['prefix' => 'rkat', 'middleware' => ['auth']], function () {
     Route::post('{idRkat}/update', 'RkatController@update')->name('rkat.update');
     Route::post('{idRkat}/destroy', 'RkatController@destroy')->name('rkat.destroy');
     Route::post('{idProgram}/{idKategoriRkat}/store', 'RkatController@store_sub_kategori_program')->name('rkat.sub-kategori-program.store');
+    Route::get('{idProgram}/get', 'RkatController@get_rkat_program')->name('rkat.program.get');
+    Route::get('sub/{rkatId}/get', 'RkatController@get_sub_rkat_program')->name('rkat.sub.program.get');
+    Route::get('get/{rkatId}', 'RkatController@get_rkat')->name('rkat.get');
 });
 
 Route::group(['prefix' => 'master' , 'namespace' => 'Master', 'middleware' => ['auth']], function () {

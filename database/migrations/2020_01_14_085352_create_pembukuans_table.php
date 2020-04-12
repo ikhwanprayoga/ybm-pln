@@ -19,6 +19,7 @@ class CreatePembukuansTable extends Migration
             $table->unsignedBigInteger('kategori_ashnaf_id')->nullable();
             $table->unsignedBigInteger('kategori_program_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('rkat_program_id')->nullable();
             $table->date('tanggal');
             $table->string('tipe');
             $table->text('uraian');
@@ -31,7 +32,7 @@ class CreatePembukuansTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
-            
+
             $table->foreign('kategori_pembukuan_id')
                 ->references('id')
                 ->on('kategori_pembukuans')
@@ -45,6 +46,11 @@ class CreatePembukuansTable extends Migration
             $table->foreign('kategori_program_id')
                 ->references('id')
                 ->on('kategori_programs')
+                ->onDelete('set null');
+
+            $table->foreign('rkat_program_id')
+                ->references('id')
+                ->on('rkat_programs')
                 ->onDelete('set null');
         });
     }

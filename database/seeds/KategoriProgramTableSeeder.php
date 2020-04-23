@@ -13,11 +13,20 @@ class KategoriProgramTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [' ', 'Pendidikan', 'Kesehatan', 'Ekonomi', 'Dakwah', 'Sosial Kemanusiaan', 'Operasional'];
-        
+        $data = [
+            ['nama'=>' ', 'warna'=>null],
+            ['nama'=>'Pendidikan', 'warna'=>'#ff4900'],
+            ['nama'=>'Kesehatan', 'warna'=>'#23dcda'],
+            ['nama'=>'Ekonomi', 'warna'=>'#ea8d15'],
+            ['nama'=>'Dakwah', 'warna'=>'#bab845'],
+            ['nama'=>'Sosial Kemanusiaan', 'warna'=>'#63bb44'],
+            ['nama'=>'Operasional', 'warna'=>'#00b3ff'],
+        ];
+
         foreach ($data as $key => $value) {
             KategoriProgram::create([
-                'nama_program' => $value
+                'nama_program' => $value['nama'],
+                'warna' => $value['warna']
             ]);
         }
     }

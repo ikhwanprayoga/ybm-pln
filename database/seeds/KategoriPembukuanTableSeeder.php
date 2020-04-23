@@ -24,8 +24,8 @@ class KategoriPembukuanTableSeeder extends Seeder
 
         foreach ($data as $key => $value) {
             KategoriPembukuan::create([
-                'nama_pembukuan' => $value['nama_pembukuan'], 
-                'kode' => $value['kode'], 
+                'nama_pembukuan' => $value['nama_pembukuan'],
+                'kode' => $value['kode'],
                 'slug' => $value['slug']
             ]);
         }

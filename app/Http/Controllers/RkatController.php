@@ -36,7 +36,7 @@ class RkatController extends Controller
 
         $periodeTemp = explode('-', $cekPeriode->first()->periode);
         $periode = $periodeTemp[0];
-        $programs = KategoriProgram::with('rkatProgram')->where('nama_program', '!=', ' ')->get();
+        $programs = KategoriProgram::with('rkatProgram')->where([['nama_program', '!=', ' '],['nama_program', '!=', 'Operasional']] )->get();
 
         foreach ($programs as $key => $program) {
             foreach ($program->rkatProgram->where('periode', $periode)->where('parent_id', null) as $keys => $rkat) {

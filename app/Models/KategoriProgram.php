@@ -17,4 +17,14 @@ class KategoriProgram extends Model
     {
         return $this->hasMany('App\Models\RkatProgram', 'kategori_program_id');
     }
+
+    public function pembukuan()
+    {
+        return $this->hasMany('App\Models\Pembukuan', 'kategori_program_id');
+    }
+
+    public function pembukuanPeriode($periode)
+    {
+        return $this->hasMany('App\Models\Pembukuan', 'kategori_program_id')->whereYear('tanggal', $periode);
+    }
 }

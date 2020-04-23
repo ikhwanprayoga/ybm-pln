@@ -36,4 +36,5 @@ class Pembukuan extends Model
     {
         return $this->belongsTo('App\Models\KategoriProgram', 'kategori_program_id', 'id');
     }
+
 }

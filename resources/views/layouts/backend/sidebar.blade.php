@@ -39,11 +39,11 @@
                     <li><a href="{{ route('laporan.rekap-penyaluran-rinci') }}">Rekap Penyaluran Rinci</a></li>
                     <li><a href="{{ route('laporan.rekap-penyaluran-penerima') }}">Rekap Penyaluran Penerima</a></li>
                     <li><a href="{{ route('laporan.arus-dana') }}">Arus Kas Dana</a></li>
-                    <li><a href="{{ route('laporan.arus-dana') }}">Realisasi RKAT</a></li>
+                    <li><a href="{{ route('laporan.realisasi-rkat') }}">Realisasi RKAT</a></li>
                     {{-- <li><a href="#">Saldo Kas Bank</a></li> --}}
                 </ul>
             </li>
-            <li class="nav-label">RKAT</li>
+            {{-- <li class="nav-label">RKAT</li> --}}
             <li>
                 <a href="{{ route('rkat.index') }}" aria-expanded="false">
                     <i class="icon-notebook menu-icon"></i><span class="nav-text">Rencana Anggaran</span>

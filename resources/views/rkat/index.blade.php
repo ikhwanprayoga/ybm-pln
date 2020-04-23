@@ -94,7 +94,7 @@
                                             <td id="rkatProgram{{ $program->id }}" style="font-weight: 800;"></td>
                                             <td id="persenProgram{{ $program->id }}" style="font-weight: 800;"></td>
                                             <td>
-                                                <button class="tombolTambahKategori" type="submit" data-programId="{{ $program->id }}">+ Kategori</button>
+                                                <button class="tombolTambahKategori btn btn-primary btn-sm" type="submit" data-programId="{{ $program->id }}">+ Kategori</button>
                                             </td>
                                         </tr>
                                             @foreach ($program->rkatProgram->where('periode', $periode)->where('parent_id', null) as $rkatProgram)
@@ -105,19 +105,19 @@
                                                     <td></td>
                                                     <td>
                                                         <button
-                                                            class="tombolTambahSubKategori"
+                                                            class="tombolTambahSubKategori btn btn-primary btn-sm"
                                                             type="submit"
                                                             data-programId="{{ $program->id }}"
                                                             data-kategoriRkat="{{ $rkatProgram->id }}">Tambah Sub Kategori
                                                         </button>
                                                         <button
-                                                            class="tombolUbahKategori"
+                                                            class="tombolUbahKategori btn btn-warning btn-sm"
                                                             type="submit"
                                                             data-rincian="{{ $rkatProgram->rincian_rkat }}"
                                                             data-rkatId="{{ $rkatProgram->id }}">Ubah Kategori
                                                         </button>
                                                         <button
-                                                            class="tombolHapusKategori"
+                                                            class="tombolHapusKategori btn btn-danger btn-sm"
                                                             type="submit"
                                                             data-rincian="{{ $rkatProgram->rincian_rkat }}"
                                                             data-rkatId="{{ $rkatProgram->id }}">Hapus Kategori
@@ -133,7 +133,7 @@
                                                     {{-- <td>{{ $child->persen_anggaran }} %</td> --}}
                                                     <td>
                                                         <button
-                                                            class="tombolUbahSubKategori"
+                                                            class="tombolUbahSubKategori btn btn-warning btn-sm"
                                                             type="submit"
                                                             data-rkatId="{{ $child->id }}"
                                                             data-rkatRincianRkat="{{ $child->rincian_rkat }}"
@@ -141,7 +141,7 @@
                                                             data-rkatPersen="{{ $child->persen_anggaran }}">Ubah Sub Kategori
                                                         </button>
                                                         <button
-                                                            class="tombolHapusKategori"
+                                                            class="tombolHapusKategori btn btn-danger btn-sm"
                                                             type="submit"
                                                             data-rincian="{{ $child->rincian_rkat }}"
                                                             data-rkatId="{{ $child->id }}">Hapus Sub Kategori

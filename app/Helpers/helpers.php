@@ -102,4 +102,28 @@ class HelpersServiceProvider
                 );
         return $bulan[$key];
     }
+
+    public static function kalenderIndo($tanggal)
+    {
+        $namaBulan = array (1 =>   'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                );
+
+        $explode = explode('-', $tanggal);
+        $tanggal = $explode[2];
+        $bulan = (int)$explode[1];
+        $tahun = $explode[0];
+
+        return $tanggal.' '.$namaBulan[$bulan].' '.$tahun;
+    }
 }
